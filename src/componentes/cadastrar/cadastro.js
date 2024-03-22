@@ -1,5 +1,6 @@
-import imagem from '../imagens/imagemprincipal1.jpg'
-import Botao from '../botao/botao'
+import React from 'react';
+import imagem from '../imagens/imagemprincipal1.jpg';
+import Botao from '../botao/botao';
 import { Link } from 'react-router-dom';
 
 const Cadastro = () => {
@@ -23,7 +24,12 @@ const Cadastro = () => {
             type="email"
             placeholder='Informe seu email'
             className='w-full text-black py-4 my-2  border-b border-black outline-none focus:outline-none' />
-          <input type="password"
+          <input
+            type="text"
+            placeholder='Informe seu CPF'
+            className='w-full text-black py-4 my-2  border-b border-black outline-none focus:outline-none' />
+          <input
+            type="password"
             placeholder='Informe sua senha'
             className='w-full text-black py-4 my-2  border-b border-black outline-none focus:outline-none' />
         </form>
@@ -36,4 +42,4 @@ const Cadastro = () => {
     </div>
   )
 }
-export default Cadastro
+export default Cadastro;
