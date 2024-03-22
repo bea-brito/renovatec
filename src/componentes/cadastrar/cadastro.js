@@ -1,9 +1,8 @@
-import './login.css'
 import imagem from '../imagens/imagemprincipal1.jpg'
 import Botao from '../botao/botao'
 import { Link } from 'react-router-dom';
 
-const Login = () => {
+const Cadastro = () => {
   return (
     <div className='w-full h-screen flex items-start'>
 
@@ -12,13 +11,17 @@ const Login = () => {
       </div>
 
       <div className='w-full flex flex-col p-20'>
-        <h3 className='text-2xl font-semibold mb-4 text-yellow-500'>Login</h3>
+        <h3 className='text-2xl font-semibold mb-4 text-yellow-500'>Cadastro</h3>
         <p>Sistema Renovatec</p>
 
         <form className='w-full flex flex-col'>
           <input
             type="text"
-            placeholder='Informe seu usuário'
+            placeholder='Informe seu nome'
+            className='w-full text-black py-4 my-2  border-b border-black outline-none focus:outline-none' />
+          <input
+            type="email"
+            placeholder='Informe seu email'
             className='w-full text-black py-4 my-2  border-b border-black outline-none focus:outline-none' />
           <input type="password"
             placeholder='Informe sua senha'
@@ -26,19 +29,11 @@ const Login = () => {
         </form>
 
         <div className='w-full flex items-center justify-between'>
-          <div className='w-full flex items-center'>
-            <input type="checkbox"
-              className='w-4 h-4 mr-2' />
-            <p className='text-sm'>Relembrar senha por 30 dias</p>
-          </div>
-          <div className="flex items-center">
-            <p><Link to="/senha" className='text-sm cursor-pointer whitespace-nowrap font-medium underline underline-offset-2 hover:text-yellow-500'>Esqueceu a senha?</Link></p>
-            <p className="ml-4"><Link to="/cadastro" className='text-sm cursor-pointer whitespace-nowrap font-medium underline underline-offset-2 hover:text-yellow-500'>Cadastrar-se</Link></p>
-          </div>
+          <Link to="/" className='text-sm cursor-pointer whitespace-nowrap font-medium underline underline-offset-2 hover:text-yellow-500'>Já tem uma conta? Faça login</Link>
         </div>
-        <Botao className='w-1/2 mt-2 bg-black text-white py-2 px-4 rounded hover:bg-yellow-500'> Entrar </Botao>
+        <Botao className='w-1/2 mt-2 bg-black text-white py-2 px-4 rounded hover:bg-yellow-500'> Cadastrar </Botao>
       </div>
     </div>
   )
 }
-export default Login
+export default Cadastro
