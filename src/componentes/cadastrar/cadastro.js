@@ -1,26 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import imagem from "../imagens/imagemprincipal1.jpg";
 import Botao from "../botao/botao";
 import supabase from "../../supabaseClient.js";
 import { Link } from "react-router-dom";
 
 const Cadastro = () => {
+  const [nome, setNome] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [senha, setSenha] = useState("");
+  const [senhaConfirmacao, setSenhaConfirmacao] = useState("");
+  const [erroSenha, setErroSenha] = useState("");
+
   const handleClick = async () => {
+    if (senha !== senhaConfirmacao) {
+      setErroSenha("Senhas diferentes inseridas");
+      return;
+    }
+
     try {
-      const { data, error } = await supabase.from("profiles").select();
+      const { error } = await supabase
+        .from("Vendedor")
+        .insert([{ Nome: nome, CPF: cpf, Senha: senha }]);
 
       if (error) {
         throw error;
       }
 
-      if (data != null) {
-        data.forEach((profile) => {
-          console.log("Nome:", profile.username);
-          console.log("Website", profile.website);
-        });
-      } else {
-        console.log("Sem dados.");
-      }
+      console.log("Dados inseridos com sucesso!");
     } catch (error) {
       console.error("Erro: ", error.message);
     }
@@ -47,17 +53,38 @@ const Cadastro = () => {
             type="text"
             placeholder="Informe seu nome"
             className="w-full text-black py-4 my-2  border-b border-black outline-none focus:outline-none"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
           />
           <input
             type="text"
             placeholder="Informe seu CPF"
             className="w-full text-black py-4 my-2  border-b border-black outline-none focus:outline-none"
+            value={cpf}
+            onChange={(e) => setCpf(e.target.value)}
           />
           <input
             type="password"
             placeholder="Informe sua senha"
             className="w-full text-black py-4 my-2  border-b border-black outline-none focus:outline-none"
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
           />
+          <input
+            type="password"
+            placeholder="Confirme sua senha"
+            className="w-full text-black py-4 my-2  border-b border-black outline-none focus:outline-none"
+            value={senhaConfirmacao}
+            onChange={(e) => {
+              setSenhaConfirmacao(e.target.value);
+              setErroSenha(""); // Limpa mensagem de erro ao digitar na confirmação de senha
+            }}
+          />
+          {erroSenha && (
+            <div className="bg-red-500 text-white py-2 px-4 rounded">
+              {erroSenha}
+            </div>
+          )}
         </form>
 
         <div className="w-full flex items-center justify-between">
