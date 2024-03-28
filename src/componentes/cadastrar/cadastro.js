@@ -9,11 +9,25 @@ const Cadastro = () => {
   const [cpf, setCpf] = useState("");
   const [senha, setSenha] = useState("");
   const [senhaConfirmacao, setSenhaConfirmacao] = useState("");
-  const [erroSenha, setErroSenha] = useState("");
+  const [erro, setErro] = useState("");
 
   const handleClick = async () => {
     if (senha !== senhaConfirmacao) {
-      setErroSenha("Senhas diferentes inseridas");
+      setErro("Senhas diferentes inseridas");
+      return;
+    }
+
+    // Verificando requisitos da senha
+    if (
+      senha.length < 8 ||
+      senha !== senha.trim() ||
+      senha === senha.toLowerCase() ||
+      !/[A-Z]/.test(senha) ||
+      !/[^a-zA-Z0-9]/.test(senha)
+    ) {
+      setErro(
+        "A senha deve ter no mínimo 8 caracteres, não pode conter espaços, deve conter ao menos 1 caractere maiúsculo e 1 caractere especial."
+      );
       return;
     }
 
@@ -28,6 +42,7 @@ const Cadastro = () => {
 
       console.log("Dados inseridos com sucesso!");
     } catch (error) {
+      setErro(error.message);
       console.error("Erro: ", error.message);
     }
   };
@@ -77,12 +92,12 @@ const Cadastro = () => {
             value={senhaConfirmacao}
             onChange={(e) => {
               setSenhaConfirmacao(e.target.value);
-              setErroSenha(""); // Limpa mensagem de erro ao digitar na confirmação de senha
+              setErro("");
             }}
           />
-          {erroSenha && (
+          {erro && (
             <div className="bg-red-500 text-white py-2 px-4 rounded">
-              {erroSenha}
+              {erro}
             </div>
           )}
         </form>
@@ -106,4 +121,5 @@ const Cadastro = () => {
     </div>
   );
 };
+
 export default Cadastro;
