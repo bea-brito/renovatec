@@ -13,6 +13,9 @@ const Cadastro = () => {
   const [sucesso, setSucesso] = useState(false);
 
   const handleClick = async () => {
+    setErro("");
+    setSucesso(false);
+
     if (senha !== senhaConfirmacao) {
       setErro("Senhas diferentes inseridas");
       return;
@@ -46,7 +49,10 @@ const Cadastro = () => {
       }
 
       setSucesso(true);
-      setErro("");
+      setNome("");
+      setCpf("");
+      setSenha("");
+      setSenhaConfirmacao("");
     } catch (error) {
       setErro(error.message);
       console.error("Erro: ", error.message);
