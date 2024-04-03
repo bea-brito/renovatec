@@ -10,6 +10,7 @@ const Cadastro = () => {
   const [senha, setSenha] = useState("");
   const [senhaConfirmacao, setSenhaConfirmacao] = useState("");
   const [erro, setErro] = useState("");
+  const [sucesso, setSucesso] = useState(false);
 
   const handleClick = async () => {
     if (senha !== senhaConfirmacao) {
@@ -17,7 +18,11 @@ const Cadastro = () => {
       return;
     }
 
-    // Verificando requisitos da senha
+    if (cpf.length !== 11) {
+      setErro("O CPF deve ter 11 dígitos, sem traços e pontos");
+      return;
+    }
+
     if (
       senha.length < 8 ||
       senha !== senha.trim() ||
@@ -40,7 +45,8 @@ const Cadastro = () => {
         throw error;
       }
 
-      console.log("Dados inseridos com sucesso!");
+      setSucesso(true);
+      setErro("");
     } catch (error) {
       setErro(error.message);
       console.error("Erro: ", error.message);
@@ -62,6 +68,12 @@ const Cadastro = () => {
           Cadastro
         </h3>
         <p>Sistema Renovatec</p>
+
+        {sucesso && (
+          <div className="bg-green-500 text-white py-2 px-4 rounded">
+            Cadastro realizado com sucesso!
+          </div>
+        )}
 
         <form className="w-full flex flex-col">
           <input
