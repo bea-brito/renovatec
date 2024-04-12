@@ -1,6 +1,5 @@
-import "./login.css";
-import imagem from "../imagens/imagemprincipal1.jpg";
-import Botao from "../botao/botao";
+import imagem from "../componentes/imagens/imagemprincipal1.jpg";
+import Botao from "../componentes/botao/botao";
 import { Link } from "react-router-dom";
 
 const Login = () => {

@@ -1,8 +1,8 @@
 import React from "react";
-import Login from "./componentes/loginPage/login";
-import Senha from "./componentes/redefinirSenha/senha";
-import Cadastro from "./componentes/cadastrar/cadastro";
-import Menu from "./componentes/menu/menu";
+import Login from "./paginas/login.js";
+import Senha from "./paginas/senha.js";
+import Cadastro from "./paginas/cadastro.js";
+import Menu from "./paginas/menu.js";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {

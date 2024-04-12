@@ -1,4 +1,4 @@
-import Botao from "../botao/botao";
+import Botao from "../componentes/botao/botao";
 import { Link } from "react-router-dom";
 
 const Menu = () => {
