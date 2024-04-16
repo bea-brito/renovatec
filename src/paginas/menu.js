@@ -1,12 +1,12 @@
 import Botao from "../componentes/botao/botao";
 import { Link } from "react-router-dom";
 
-const Menu = () => {
+const Menu = ({ token }) => {
   return (
     <div className="w-full h-screen flex items-start">
       <div className="w-full flex flex-col p-20">
         <h3 className="text-2xl font-semibold mb-4 text-yellow-500">
-          Seja Bem Vindo!
+          Seja Bem Vindo, {token.user.user_metadata.nome}!
         </h3>
 
         <div className="w-full flex items-center justify-center">
