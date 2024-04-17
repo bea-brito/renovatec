@@ -3,7 +3,15 @@ import Login from "./paginas/login.js";
 import Senha from "./paginas/senha.js";
 import Cadastro from "./paginas/cadastro.js";
 import Menu from "./paginas/menu.js";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import ErroSessao from "./paginas/erroSessao.js";
+import Pneu from "./paginas/pneu.js";
+
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 
 function App() {
   const [token, setToken] = useState(false);
@@ -13,12 +21,21 @@ function App() {
   }
 
   useEffect(() => {
-    //Checa para ver se o token foi recebido, e depois monta esse token para ser usado pelo código. Só faz isso 1 vez
+    // Checa para ver se o token foi recebido, e depois monta esse token para ser usado pelo código. Só faz isso 1 vez
     if (sessionStorage.getItem("token")) {
       let data = JSON.parse(sessionStorage.getItem("token"));
       setToken(data);
     }
   }, []);
+
+  const ProtectedRoute = ({ component: Component, ...rest }) => (
+    <Route
+      {...rest}
+      element={
+        token ? <Component token={token} /> : <Navigate to="/erroSessao" />
+      }
+    />
+  );
 
   return (
     <Router>
@@ -27,7 +44,9 @@ function App() {
           <Route path="/senha" element={<Senha />} />
           <Route path="/cadastro" element={<Cadastro />} />
           <Route path="/" element={<Login setToken={setToken} />} />
-          {token ? <Route path="/menu" element={<Menu token={token} />} /> : ""}
+          <Route path="/erroSessao" element={<ErroSessao />} />
+          <ProtectedRoute path="/menu" component={Menu} />
+          <ProtectedRoute path="/pneu" component={Pneu} />
         </Routes>
       </div>
     </Router>

@@ -16,7 +16,20 @@ const Menu = ({ token }) => {
         <h3 className="text-2xl font-semibold mb-4 text-yellow-500">
           Seja Bem Vindo, {token.user.user_metadata.nome}!
         </h3>
-
+        <div className="w-full flex items-center justify-center">
+          <Link
+            to="/pneu"
+            className="text-sm cursor-pointer whitespace-nowrap font-medium underline underline-offset-2 hover:text-yellow-500"
+          >
+            <Botao
+              // onClick={handleLogout}
+              className="w-full mt-2 bg-black text-white py-2 px-4 rounded hover:bg-yellow-500"
+            >
+              {" "}
+              Administrar Pneus{" "}
+            </Botao>
+          </Link>
+        </div>
         <div className="w-full flex items-center justify-center">
           <Link
             to="/"
