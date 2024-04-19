@@ -1,10 +1,13 @@
+import React from "react";
 
-import React from 'react';
-
-const Botao = ({ className, children }) => {
+const Botao = (props) => {
   return (
-    <button className={`focus:outline-none ${className}`}>
-      {children}
+    <button
+      className={props.className}
+      onClick={props.onClick}
+      type={props.type}
+    >
+      {props.children}
     </button>
   );
 };
