@@ -21,21 +21,12 @@ function App() {
   }
 
   useEffect(() => {
-    // Checa para ver se o token foi recebido, e depois monta esse token para ser usado pelo código. Só faz isso 1 vez
+    //Checa para ver se o token foi recebido, e depois monta esse token para ser usado pelo código. Só faz isso 1 vez
     if (sessionStorage.getItem("token")) {
       let data = JSON.parse(sessionStorage.getItem("token"));
       setToken(data);
     }
   }, []);
-
-  const ProtectedRoute = ({ component: Component, ...rest }) => (
-    <Route
-      {...rest}
-      element={
-        token ? <Component token={token} /> : <Navigate to="/erroSessao" />
-      }
-    />
-  );
 
   return (
     <Router>
@@ -45,8 +36,13 @@ function App() {
           <Route path="/cadastro" element={<Cadastro />} />
           <Route path="/" element={<Login setToken={setToken} />} />
           <Route path="/erroSessao" element={<ErroSessao />} />
-          <ProtectedRoute path="/menu" component={Menu} />
-          <ProtectedRoute path="/pneu" component={Pneu} />
+          <Route
+            path="/menu"
+            element={
+              token ? <Menu token={token} /> : <Navigate to="/erroSessao" />
+            }
+          />
+          <Route path="/pneu" element={<Pneu />} />
         </Routes>
       </div>
     </Router>
