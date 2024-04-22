@@ -45,7 +45,7 @@ const Cadastro = () => {
   }
 
   return (
-    <div className="w-full h-screen flex items-start">
+    <div className="flex items-center justify-center h-screen">
       <div className="relative w-1/2 h-full">
         <img
           src={imagem}
@@ -54,7 +54,7 @@ const Cadastro = () => {
         />
       </div>
 
-      <div className="w-full flex flex-col p-20">
+      <div className="w-1/2 p-8">
         <h3 className="text-2xl font-semibold mb-4 text-yellow-500">
           Cadastro
         </h3>

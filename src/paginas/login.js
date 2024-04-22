@@ -32,14 +32,14 @@ const Login = ({ setToken }) => {
       });
       if (error) throw error;
       setToken(data);
-      navigate("/menu");
+      navigate("/homepage");
     } catch (error) {
       alert(error);
     }
   }
 
   return (
-    <div className="w-full h-screen flex items-start">
+    <div className="flex items-center justify-center h-screen">
       <div className="relative w-1/2 h-full">
         <img
           src={imagem}
@@ -49,8 +49,7 @@ const Login = ({ setToken }) => {
       </div>
 
       <div className="w-full flex flex-col p-20">
-        <h3 className="text-2xl font-semibold mb-4 text-yellow-500">Login</h3>
-        <p>Sistema Renovatec</p>
+        <h3 className="text-2xl font-semibold text-yellow-500">Login</h3>
         <form className="w-full flex flex-col" onSubmit={signInWithEmail}>
           <input
             type="text"
@@ -66,6 +65,14 @@ const Login = ({ setToken }) => {
             id="senha"
             onChange={handleChange}
           />
+            <p>
+              <Link
+                to="/senha"
+                className="text-sm cursor-pointer whitespace-nowrap font-medium underline underline-offset-2 hover:text-yellow-500"
+              >
+                Esqueceu a senha?
+              </Link>
+            </p>
           <Botao
             className="w-1/2 mt-2 bg-black text-white py-2 px-4 rounded hover:bg-yellow-500"
             type="submit"
@@ -82,10 +89,10 @@ const Login = ({ setToken }) => {
           <div className="flex items-center">
             <p>
               <Link
-                to="/senha"
+                to="/HomePage"
                 className="text-sm cursor-pointer whitespace-nowrap font-medium underline underline-offset-2 hover:text-yellow-500"
               >
-                Esqueceu a senha?
+                HomePage
               </Link>
             </p>
             <p className="ml-4">

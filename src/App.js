@@ -5,6 +5,7 @@ import Cadastro from "./paginas/cadastro.js";
 import Menu from "./paginas/menu.js";
 import ErroSessao from "./paginas/erroSessao.js";
 import Pneu from "./paginas/pneu.js";
+import HomePage from "./paginas/homePage.js";
 
 import {
   BrowserRouter as Router,
@@ -43,6 +44,7 @@ function App() {
             }
           />
           <Route path="/pneu" element={<Pneu />} />
+          <Route path="/HomePage" element={<HomePage />} />
         </Routes>
       </div>
     </Router>
