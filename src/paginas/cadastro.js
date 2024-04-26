@@ -56,10 +56,8 @@ const Cadastro = () => {
 
       <div className="w-1/2 p-8">
         <h3 className="text-2xl font-semibold mb-4 text-yellow-500">
-          Cadastro
+          Cadastro de funcionário
         </h3>
-        <p>Sistema Renovatec</p>
-
         {/* {sucesso && (
           <div className="bg-green-500 text-white py-2 px-4 rounded">
             Cadastro realizado com sucesso!
@@ -69,28 +67,28 @@ const Cadastro = () => {
         <form className="w-full flex flex-col" onSubmit={handleSubmit}>
           <input
             type="text"
-            placeholder="Informe seu nome"
+            placeholder="Informe o nome"
             className="w-full text-black py-4 my-2  border-b border-black outline-none focus:outline-none"
             id="nome"
             onChange={handleChange}
           />
           <input
             type="text"
-            placeholder="Informe seu CPF"
+            placeholder="Informe o CPF"
             className="w-full text-black py-4 my-2  border-b border-black outline-none focus:outline-none"
             id="cpf"
             onChange={handleChange}
           />
           <input
             type="text"
-            placeholder="Informe seu E-mail"
+            placeholder="Informe o E-mail"
             className="w-full text-black py-4 my-2  border-b border-black outline-none focus:outline-none"
             id="email"
             onChange={handleChange}
           />
           <input
             type="password"
-            placeholder="Informe sua senha"
+            placeholder="Informe a senha"
             className="w-full text-black py-4 my-2  border-b border-black outline-none focus:outline-none"
             id="senha"
             onChange={handleChange}
@@ -111,7 +109,7 @@ const Cadastro = () => {
             </div>
           )} */}
           <Botao
-            className="w-1/2 mt-2 bg-black text-white py-2 px-4 rounded hover:bg-yellow-500"
+            className="w-1/2 bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded"
             type="submit"
           >
             {" "}
@@ -122,7 +120,7 @@ const Cadastro = () => {
         <div className="w-full flex items-center justify-between">
           <Link
             to="/"
-            className="text-sm cursor-pointer whitespace-nowrap font-medium underline underline-offset-2 hover:text-yellow-500"
+            className="mt-2 text-yellow-500 hover:underline"
           >
             Já tem uma conta? Faça login
           </Link>

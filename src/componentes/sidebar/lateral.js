@@ -49,13 +49,19 @@ const Sidebar = ({ token }) => {
         <div className="mb-10 ml-1 hover:bg-gray-700">
           <div className="text-white ml-2 flex items-center">
             <SidebarItem icon={<FontAwesomeIcon icon={faTractor} size="lg" />} /> 
-            <span className="ml-4">Exemplo</span> 
+            <span className="ml-4">Produção</span> 
           </div>
         </div>
-        <div className='m-1 hover:bg-gray-700'>
-          <div className="text-white ml-2 flex items-center"> 
+        <div className="mb-10 ml-1 hover:bg-gray-700">
+          <div className="text-white ml-2 flex items-center">
             <SidebarItem icon={<FontAwesomeIcon icon={faGear} size="lg" />} /> 
-            <span className="ml-4">Config</span> 
+            <span className="ml-4">Faturamento</span> 
+          </div>
+        </div>
+        <div className="mb-10 ml-1 hover:bg-gray-700">
+          <div className="text-white ml-2 flex items-center">
+            <SidebarItem icon={<FontAwesomeIcon icon={faGear} size="lg" />} /> 
+            <span className="ml-4">Cliente</span> 
           </div>
         </div>
         

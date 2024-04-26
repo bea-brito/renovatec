@@ -1,22 +1,21 @@
-import Botao from "../componentes/botao/botao";
+import React from "react";
 import { Link } from "react-router-dom";
+import Botao from "../componentes/botao/botao";
 
-const erroSessao = () => {
+const ErroSessao = () => {
   return (
-    <div className="w-full h-screen flex items-start">
-      <div className="w-full flex flex-col p-20">
-        <h3 className="text-2xl font-semibold mb-4 text-yellow-500">
-          Erro de autorização. Por favor, faça login para acessar esse conteúdo.
+    <div className="flex items-center justify-center h-screen bg-gray-100">
+      <div className="max-w-md w-full bg-white p-8 rounded shadow-md">
+        <h3 className="text-2xl font-semibold text-yellow-500 mb-4">
+          Erro de Autorização
         </h3>
-
-        <div className="w-full flex items-center justify-center">
-          <Link
-            to="/"
-            className="text-sm cursor-pointer whitespace-nowrap font-medium underline underline-offset-2 hover:text-yellow-500"
-          >
-            <Botao className="w-full mt-2 bg-black text-white py-2 px-4 rounded hover:bg-yellow-500">
-              {" "}
-              Ir para Login{" "}
+        <p className="mb-6">
+          Por favor, faça login para acessar este conteúdo.
+        </p>
+        <div className="flex justify-center">
+          <Link to="/">
+            <Botao className="bg-black hover:bg-yellow-500 text-white py-2 px-4 rounded">
+              Ir para o Login
             </Botao>
           </Link>
         </div>
@@ -25,4 +24,4 @@ const erroSessao = () => {
   );
 };
 
-export default erroSessao;
+export default ErroSessao;
