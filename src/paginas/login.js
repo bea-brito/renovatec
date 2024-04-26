@@ -37,6 +37,7 @@ const Login = ({ setToken }) => {
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
+      <imagem/>
       <div className="max-w-md w-full bg-white p-8 rounded shadow-md">
         <h3 className="text-2xl font-semibold text-yellow-500 mb-4">Login</h3>
         <form onSubmit={signInWithEmail}>

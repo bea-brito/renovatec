@@ -7,6 +7,7 @@ import ErroSessao from "./paginas/erroSessao.js";
 import Pneu from "./paginas/pneu.js";
 import HomePage from "./paginas/homePage.js";
 import CadastroCliente from "./paginas/CadastroCliente.js";
+import NovaColeta from "./paginas/novaColeta.js";
 
 import {
   BrowserRouter as Router,
@@ -47,6 +48,7 @@ function App() {
           <Route path="/pneu" element={<Pneu />} />
           <Route path="/HomePage" element={<HomePage />} />
           <Route path="/CadastroCliente" element={<CadastroCliente />} />
+          <Route path="/NovaColeta" element={<NovaColeta />} />
         </Routes>
       </div>
     </Router>
