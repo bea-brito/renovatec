@@ -163,12 +163,6 @@ const InfoColeta = ({ pneus, adicionarPneu, infoGeral, setInfoGeral  }) => {
                     <option value="Recapagem">Recapagem</option>
                     <option value="Manutenção">Manutenção</option>
                 </select>
-                <button
-                    onClick={handleAddPneu}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 col-span-1 md:col-span-2"
-                >
-                    Adicionar pneu
-                </button>
             </div>
             {pneus.length > 0 && (
                 <table className="min-w-full table-auto text-sm text-left text-gray-500 dark:text-gray-400 shadow-xl">

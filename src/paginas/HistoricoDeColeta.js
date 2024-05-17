@@ -16,7 +16,7 @@ const HistoricoDeColeta = ({ token }) => {
     { id: 2, data: "2023-05-02", cliente: "Ronildo César", status: "Em produção" },
     { id: 3, data: "2023-05-03", cliente: "Sindônibus", status: "Produzido" }
   ]);
-  const [addedIds, setAddedIds] = useState(new Set([1, 2, 3]));  // Inicialmente marcando as coletas mockadas
+  const [addedIds, setAddedIds] = useState(new Set([1, 2, 3]));
 
   useEffect(() => {
     const novaColeta = location.state?.novaColeta;
@@ -29,7 +29,7 @@ const HistoricoDeColeta = ({ token }) => {
       };
       setColetas(prevColetas => [...prevColetas, coletaAdicionada]);
       setAddedIds(prevIds => new Set(prevIds.add(novaColeta.idColeta)));
-      navigate('/historicoDeColeta', { replace: true });  // Limpar o estado para evitar reprocessamento
+      navigate('/historicoDeColeta', { replace: true, state: {} });  // Limpar o estado para evitar reprocessamento
     }
   }, [location.state, navigate, addedIds]);
 
@@ -54,6 +54,15 @@ const HistoricoDeColeta = ({ token }) => {
       </button>
     </div>
   );
+  
+  const removerColeta = (id) => {
+    setColetas(coletas.filter(coleta => coleta.id !== id));
+    setAddedIds(prevIds => {
+      const newSet = new Set(prevIds);
+      newSet.delete(id);
+      return newSet;
+    });
+  };
 
   return (
     <div className="flex flex-col h-screen bg-gray-100">
@@ -65,7 +74,7 @@ const HistoricoDeColeta = ({ token }) => {
         <div className={`ml-${isOpen ? '60' : '10'} flex-1 flex flex-col px-4`}>
           <div className="container mx-auto">
             <h1 className="text-lg font-bold my-4">Histórico de Coletas</h1>
-            <TabelaColetas coletas={coletas} />
+            <TabelaColetas coletas={coletas} removerColeta={removerColeta} />
             <div className="flex justify-end mt-8">
               <Botao
                 className="w-1/4 bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600"

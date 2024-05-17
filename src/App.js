@@ -7,7 +7,7 @@ import ErroSessao from "./paginas/erroSessao.js";
 import Pneu from "./paginas/pneu.js";
 import HomePage from "./paginas/homePage.js";
 import CadastroCliente from "./paginas/CadastroCliente.js";
-import VisualizarColeta from './paginas/visualizarcoleta.js';
+
 
 
 import {
@@ -18,6 +18,8 @@ import {
 } from "react-router-dom";
 import HistoricoDeColeta from "./paginas/HistoricoDeColeta.js";
 import AdicionarColeta from "./paginas/AdicionarColeta.js";
+import VisualizarColeta from './paginas/visualizarcoleta.js';
+import EditarColeta from './paginas/editarcoleta.js';
 
 function App() {
   const [token, setToken] = useState(false);
@@ -54,6 +56,7 @@ function App() {
           <Route path="/HistoricoDeColeta/AdicionarColeta" element={<AdicionarColeta />} />
           <Route path="/HistoricoDeColeta" element={<HistoricoDeColeta />} />
           <Route path="/visualizarcoleta/:id" element={<VisualizarColeta />} />
+          <Route path="/editarcoleta/:id" element={<EditarColeta />} />
 
         </Routes>
       </div>
