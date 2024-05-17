@@ -48,11 +48,12 @@ const HomePage = ({ token }) => {
       {showProfileMenu && (
         <div className="absolute top-12 right-4 bg-white border border-gray-300 rounded shadow-md">
           <ul>
-            <li>
-              <Link to="/perfil/editar" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
-                Editar
+          <Link
+                to="/perfilUsuario"
+                className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+              >
+                Editar Perfil
               </Link>
-            </li>
             <li>
               <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100">
                 Sair
