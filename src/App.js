@@ -7,6 +7,7 @@ import ErroSessao from "./paginas/erroSessao.js";
 import Pneu from "./paginas/pneu.js";
 import HomePage from "./paginas/homePage.js";
 import CadastroCliente from "./paginas/CadastroCliente.js";
+import VisualizarColeta from './paginas/visualizarcoleta.js';
 
 
 import {
@@ -52,6 +53,7 @@ function App() {
           <Route path="/CadastroCliente" element={<CadastroCliente />} />
           <Route path="/HistoricoDeColeta/AdicionarColeta" element={<AdicionarColeta />} />
           <Route path="/HistoricoDeColeta" element={<HistoricoDeColeta />} />
+          <Route path="/visualizarcoleta/:id" element={<VisualizarColeta />} />
 
         </Routes>
       </div>
