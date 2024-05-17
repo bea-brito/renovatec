@@ -7,7 +7,7 @@ import ErroSessao from "./paginas/erroSessao.js";
 import Pneu from "./paginas/pneu.js";
 import HomePage from "./paginas/homePage.js";
 import CadastroCliente from "./paginas/CadastroCliente.js";
-import NovaColeta from "./paginas/novaColeta.js";
+
 
 import {
   BrowserRouter as Router,
@@ -15,6 +15,8 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
+import HistoricoDeColeta from "./paginas/HistoricoDeColeta.js";
+import AdicionarColeta from "./paginas/AdicionarColeta.js";
 
 function App() {
   const [token, setToken] = useState(false);
@@ -48,7 +50,9 @@ function App() {
           <Route path="/pneu" element={<Pneu />} />
           <Route path="/HomePage" element={<HomePage />} />
           <Route path="/CadastroCliente" element={<CadastroCliente />} />
-          <Route path="/NovaColeta" element={<NovaColeta />} />
+          <Route path="/HistoricoDeColeta/AdicionarColeta" element={<AdicionarColeta />} />
+          <Route path="/HistoricoDeColeta" element={<HistoricoDeColeta />} />
+
         </Routes>
       </div>
     </Router>

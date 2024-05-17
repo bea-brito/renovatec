@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import SidebarItem from './SidebarItem';
 import Botao from '../botao/botao';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Importa FontAwesomeIcon
-import { faGear, faTruck, faHouse, faArrowRight, faArrowLeft, faTractor } from '@fortawesome/free-solid-svg-icons'; // Importa o ícone 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGear, faTruck, faHouse, faArrowRight, faArrowLeft, faTractor } from '@fortawesome/free-solid-svg-icons';
 
 const Sidebar = ({ token }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,60 +18,34 @@ const Sidebar = ({ token }) => {
           <div className="flex items-center">
             <span role="img" aria-label="logo"></span>
           </div>
-          <button onClick={toggleSidebar} className="text-white focus:outline-none">
+          <button onClick={toggleSidebar} className="text-white">
             {isOpen ? (
               <div className="relative w-8 h-8 ">
-                <div className="absolute flex items-center justify-center w-full h-full -ml-4 bg-gray-500"> {/* Alterado para bg-gray-500 */}
-                  <SidebarItem icon={<FontAwesomeIcon icon={faArrowLeft} size="lg" />} />
+                <div className="absolute flex items-center justify-center w-full h-full -ml-2 bg-gray-500 rounded-lg">
+                  <SidebarItem icon={<FontAwesomeIcon icon={faArrowLeft} size="lg" />} isOpen={isOpen} />
                 </div>
               </div>
             ) : (
-              <div className="relative w-8 h-8 ">
-                <div className="absolute flex items-center justify-center w-full h-full bg-gray-500"> {/* Alterado para bg-gray-500 */}
-                  <SidebarItem icon={<FontAwesomeIcon icon={faArrowRight} size="lg" />} />
+              <div className="relative w-9 h-9 ">
+                <div className="absolute flex items-center justify-center w-full h-full bg-gray-500 rounded-lg">
+                  <SidebarItem icon={<FontAwesomeIcon icon={faArrowRight} size="lg" />} isOpen={isOpen} />
                 </div>
               </div>
             )}
           </button>
         </div>
-        <div className="mb-10 ml-1 hover:bg-gray-700">
-          <div className="text-white ml-2 flex items-center">
-            <SidebarItem icon={<FontAwesomeIcon icon={faHouse} size="lg" />} /> 
-            <span className="ml-4">Home</span> 
-          </div>
-        </div>
-        <div className="mb-10 ml-1 hover:bg-gray-700">
-          <div className="text-white ml-2 flex items-center"> 
-            <SidebarItem icon={<FontAwesomeIcon icon={faTruck} size="lg" />} /> 
-            <span className="ml-4">Coleta</span> 
-          </div>
-        </div>
-        <div className="mb-10 ml-1 hover:bg-gray-700">
-          <div className="text-white ml-2 flex items-center">
-            <SidebarItem icon={<FontAwesomeIcon icon={faTractor} size="lg" />} /> 
-            <span className="ml-4">Produção</span> 
-          </div>
-        </div>
-        <div className="mb-10 ml-1 hover:bg-gray-700">
-          <div className="text-white ml-2 flex items-center">
-            <SidebarItem icon={<FontAwesomeIcon icon={faGear} size="lg" />} /> 
-            <span className="ml-4">Faturamento</span> 
-          </div>
-        </div>
-        <div className="mb-10 ml-1 hover:bg-gray-700">
-          <div className="text-white ml-2 flex items-center">
-            <SidebarItem icon={<FontAwesomeIcon icon={faGear} size="lg" />} /> 
-            <span className="ml-4">Cliente</span> 
-          </div>
-        </div>
-        
+        <SidebarItem icon={<FontAwesomeIcon icon={faHouse} size="lg" />} itemName="Home" isOpen={isOpen} />
+        <SidebarItem icon={<FontAwesomeIcon icon={faTruck} size="lg" />} itemName="Coleta" isOpen={isOpen} />
+        {/* <SidebarItem icon={<FontAwesomeIcon icon={faTractor} size="lg" />} itemName="Produção" isOpen={isOpen} /> */}
+        <SidebarItem icon={<FontAwesomeIcon icon={faGear} size="lg" />} itemName="Faturamento" isOpen={isOpen} />
+        <SidebarItem icon={<FontAwesomeIcon icon={faGear} size="lg" />} itemName="Cliente" isOpen={isOpen} />
         <div className="absolute bottom-0 left-0 w-full">
           <Botao className="w-full mt-2 bg-black text-white py-2 px-4 bg-yellow-500 hover:bg-yellow-600">
             Logout
           </Botao>
         </div>
       </div>
-      <div className={`flex-1 ml-${isOpen ? '60' : '10'}`}> {/* Adiciona margem à esquerda quando a barra lateral estiver aberta */}
+      <div className={`flex-1 ml-${isOpen ? '60' : '10'}`}>
         {/* Conteúdo aqui */}
       </div>
     </div>

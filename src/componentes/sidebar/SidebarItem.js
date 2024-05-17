@@ -1,10 +1,10 @@
 import React from 'react';
 
-const SidebarItem = ({ icon, itemName }) => {
+const SidebarItem = ({ icon, itemName, isOpen }) => {
   return (
-    <div className="flex items-center px-4 py-2 text-white  cursor-pointer">
+    <div className="flex items-center px-7 py-4 text-white cursor-pointer">
       {icon}
-      {itemName}
+      <span className={isOpen ? 'ml-4' : 'hidden'}>{itemName}</span>
     </div>
   );
 };
