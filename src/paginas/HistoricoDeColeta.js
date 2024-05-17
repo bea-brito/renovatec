@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Sidebar from "../componentes/sidebar/lateral";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 import TabelaColetas from "../componentes/tabelaColeta/TabelaColetas";
 import Botao from "../componentes/botao/botao";
 
@@ -13,8 +13,13 @@ const HistoricoDeColeta = ({ token }) => {
   const navigate = useNavigate();
   const [coletas, setColetas] = useState([
     { id: 1, data: "2023-05-01", cliente: "João", status: "Recebido" },
-    { id: 2, data: "2023-05-02", cliente: "Ronildo César", status: "Em produção" },
-    { id: 3, data: "2023-05-03", cliente: "Sindônibus", status: "Produzido" }
+    {
+      id: 2,
+      data: "2023-05-02",
+      cliente: "Ronildo César",
+      status: "Em produção",
+    },
+    { id: 3, data: "2023-05-03", cliente: "Sindônibus", status: "Produzido" },
   ]);
   const [addedIds, setAddedIds] = useState(new Set([1, 2, 3]));
 
@@ -25,11 +30,11 @@ const HistoricoDeColeta = ({ token }) => {
         id: novaColeta.idColeta,
         data: novaColeta.dataPedido,
         cliente: novaColeta.cliente,
-        status: "Nova"
+        status: "Nova",
       };
-      setColetas(prevColetas => [...prevColetas, coletaAdicionada]);
-      setAddedIds(prevIds => new Set(prevIds.add(novaColeta.idColeta)));
-      navigate('/historicoDeColeta', { replace: true, state: {} });  // Limpar o estado para evitar reprocessamento
+      setColetas((prevColetas) => [...prevColetas, coletaAdicionada]);
+      setAddedIds((prevIds) => new Set(prevIds.add(novaColeta.idColeta)));
+      navigate("/historicoDeColeta", { replace: true, state: {} }); // Limpar o estado para evitar reprocessamento
     }
   }, [location.state, navigate, addedIds]);
 
@@ -50,14 +55,17 @@ const HistoricoDeColeta = ({ token }) => {
     <div className="flex items-center">
       <div className="text-white mr-2">Bem-vindo, {userName}</div>
       <button onClick={toggleProfileMenu} className="focus:outline-none">
-        <FontAwesomeIcon icon={faUser} className="text-white w-8 h-8 rounded-full" />
+        <FontAwesomeIcon
+          icon={faUser}
+          className="text-white w-8 h-8 rounded-full"
+        />
       </button>
     </div>
   );
-  
+
   const removerColeta = (id) => {
-    setColetas(coletas.filter(coleta => coleta.id !== id));
-    setAddedIds(prevIds => {
+    setColetas(coletas.filter((coleta) => coleta.id !== id));
+    setAddedIds((prevIds) => {
       const newSet = new Set(prevIds);
       newSet.delete(id);
       return newSet;
@@ -71,7 +79,7 @@ const HistoricoDeColeta = ({ token }) => {
       </div>
       <div className="flex flex-grow">
         <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
-        <div className={`ml-${isOpen ? '60' : '10'} flex-1 flex flex-col px-4`}>
+        <div className={`ml-${isOpen ? "60" : "10"} flex-1 flex flex-col px-4`}>
           <div className="container mx-auto">
             <h1 className="text-lg font-bold my-4">Histórico de Coletas</h1>
             <TabelaColetas coletas={coletas} removerColeta={removerColeta} />
@@ -90,12 +98,18 @@ const HistoricoDeColeta = ({ token }) => {
         <div className="absolute top-12 right-4 bg-white border border-gray-300 rounded shadow-md">
           <ul>
             <li>
-              <Link to="/perfil/editar" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+              <Link
+                to="/perfilUsuario"
+                className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+              >
                 Editar Perfil
               </Link>
             </li>
             <li>
-              <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100">
+              <button
+                onClick={handleLogout}
+                className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
+              >
                 Sair
               </button>
             </li>

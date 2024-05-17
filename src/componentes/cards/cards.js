@@ -6,7 +6,7 @@ const Cards = () => {
 
   // Funções para navegar para as respectivas páginas
   const goToPerfilFuncionario = () => {
-    navigate('/perfil-funcionario'); 
+    navigate('/perfilUsuario'); 
   };
 
   const goToHistoricoDeColetas = () => {

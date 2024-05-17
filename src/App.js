@@ -20,6 +20,8 @@ import HistoricoDeColeta from "./paginas/HistoricoDeColeta.js";
 import AdicionarColeta from "./paginas/AdicionarColeta.js";
 import VisualizarColeta from './paginas/visualizarcoleta.js';
 import EditarColeta from './paginas/editarcoleta.js';
+import PerfilUsuario from "./paginas/perfilUsuario.js"
+
 
 function App() {
   const [token, setToken] = useState(false);
@@ -53,6 +55,7 @@ function App() {
           <Route path="/pneu" element={<Pneu />} />
           <Route path="/HomePage" element={<HomePage />} />
           <Route path="/CadastroCliente" element={<CadastroCliente />} />
+          <Route path="/perfilUsuario" element={<PerfilUsuario />} />
           <Route path="/HistoricoDeColeta/AdicionarColeta" element={<AdicionarColeta />} />
           <Route path="/HistoricoDeColeta" element={<HistoricoDeColeta />} />
           <Route path="/visualizarcoleta/:id" element={<VisualizarColeta />} />
