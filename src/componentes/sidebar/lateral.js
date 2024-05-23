@@ -11,12 +11,24 @@ import {
   faArrowLeft,
   faTractor,
 } from "@fortawesome/free-solid-svg-icons";
+import { useAuth } from "../../context/AuthProvider";
 
-const Sidebar = ({ token }) => {
+const Sidebar = () => {
+  const { signOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    try {
+      const { error } = await signOut();
+      console.log(error);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -80,7 +92,10 @@ const Sidebar = ({ token }) => {
           isOpen={isOpen}
         />
         <div className="absolute bottom-0 left-0 w-full">
-          <Botao className="w-full mt-2 bg-black text-white py-2 px-4 bg-yellow-500 hover:bg-yellow-600">
+          <Botao
+            onClick={handleLogout}
+            className="w-full mt-2 bg-black text-white py-2 px-4 bg-yellow-500 hover:bg-yellow-600"
+          >
             Logout
           </Botao>
         </div>
