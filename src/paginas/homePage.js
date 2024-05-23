@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../componentes/sidebar/lateral";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import Cards from "../componentes/cards/cards";
 import { useAuth } from "../context/AuthProvider";
+import { getVendedor } from "../services/vendedorCRUD";
 
 const HomePage = () => {
   const { user, signOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [usuario, setUsuario] = useState({
+    nome: "",
+  });
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -29,10 +33,33 @@ const HomePage = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data, error } = await getVendedor(user.id);
+        if (error) {
+          console.log("Error:");
+          console.log(error);
+          throw error;
+        }
+        const dadosUsuario = {
+          nome: data[0].nome,
+        };
+
+        setUsuario(dadosUsuario);
+        console.log(data);
+        return data;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const { data } = fetchData();
+  }, []);
+
   const userName = "Usuário Exemplo";
   const profileIcon = (
     <div className="flex items-center">
-      <div className="text-white mr-2">Bem-vindo, {user.id}</div>
+      <div className="text-white mr-2">Bem-vindo, {usuario.nome}</div>
       <button onClick={toggleProfileMenu} className="focus:outline-none">
         <FontAwesomeIcon
           icon={faUser}
