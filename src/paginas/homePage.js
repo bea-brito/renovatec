@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import Cards from "../componentes/cards/cards";
 import { useAuth } from "../context/AuthProvider";
-import { getVendedor } from "../services/vendedorCRUD";
+import { getVendedor, getVendedorByID } from "../services/vendedorCRUD";
 
 const HomePage = () => {
   const { user, signOut } = useAuth();
@@ -36,7 +36,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data, error } = await getVendedor(user.id);
+        const { data, error } = await getVendedorByID(user.id);
         if (error) {
           console.log("Error:");
           console.log(error);

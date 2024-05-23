@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../componentes/sidebar/lateral";
-import { getVendedor } from "../services/vendedorCRUD";
+import { getVendedor, getVendedorByID } from "../services/vendedorCRUD";
 import { useAuth } from "../context/AuthProvider.js";
 
 const PerfilUsuario = () => {
@@ -17,7 +17,7 @@ const PerfilUsuario = () => {
     setLoading(true);
     const fetchData = async () => {
       try {
-        const { data, error } = await getVendedor(user.id);
+        const { data, error } = await getVendedorByID(user.id);
         if (error) {
           console.log("Error:");
           console.log(error);

@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../componentes/sidebar/lateral";
 import Botao from "../componentes/botao/botao";
 import supabase from "../supabaseClient.js";
+import { getVendedor, getVendedorByID } from "../services/vendedorCRUD";
 
 const CadastroCliente = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
+    nomeArray: [],
+    id: [],
+    vendedor: "",
     nome: "",
     cpf: "",
     telefone: "",
@@ -17,6 +21,7 @@ const CadastroCliente = () => {
     complemento: "",
     numero: "",
   });
+
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -24,13 +29,43 @@ const CadastroCliente = () => {
     setIsOpen(!isOpen);
   };
 
-  function handleChange(event) {
+  const handleChange = (event) => {
     const { id, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
+    setFormData({
+      ...formData,
       [id]: value,
-    }));
-  }
+    });
+  };
+  console.log(formData);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data, error } = await getVendedor();
+        if (error) {
+          console.log("Error:");
+          console.log(error);
+          throw error;
+        }
+
+        const nomes = [];
+        const ids = [];
+
+        data.forEach((item) => {
+          nomes.push(item.nome);
+          ids.push(item.ID_Vendedor);
+        });
+
+        setFormData({ nomeArray: nomes, id: ids });
+
+        console.log(data);
+        return data;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const { data } = fetchData();
+  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -93,6 +128,29 @@ const CadastroCliente = () => {
             onSubmit={handleSubmit}
             className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
           >
+            <div className="mb-4">
+              <label
+                htmlFor="vendedor"
+                className="block text-gray-700 text-sm font-bold mb-2"
+              >
+                Escolha Vendedor:
+              </label>
+              <select
+                id="vendedor"
+                value={formData.vendedor}
+                onChange={handleChange}
+                placeholder="Vendedor"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                required
+              >
+                <option value="">Selecione Vendedor</option>
+                {formData.nomeArray.map((nome, index) => (
+                  <option key={index} value={formData.id[index]}>
+                    {nome}
+                  </option>
+                ))}
+              </select>
+            </div>
             <div className="mb-4">
               <label
                 htmlFor="nome"
