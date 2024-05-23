@@ -4,22 +4,26 @@ import Sidebar from "../componentes/sidebar/lateral";
 import Botao from "../componentes/botao/botao";
 import supabase from "../supabaseClient.js";
 import { getVendedor, getVendedorByID } from "../services/vendedorCRUD";
+import { insertCliente } from "../services/clienteCRUD.js";
 
 const CadastroCliente = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     nomeArray: [],
     id: [],
     vendedor: "",
     nome: "",
-    cpf: "",
+    CPF: "",
     telefone: "",
     email: "",
-    localidade: "",
-    rua: "",
-    bairro: "",
-    complemento: "",
+    logradouro: "",
     numero: "",
+    complemento: "",
+    bairro: "",
+    CEP: "",
+    cidade: "",
+    UF: "",
   });
 
   const [successMessage, setSuccessMessage] = useState("");
@@ -69,27 +73,48 @@ const CadastroCliente = () => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setSuccessMessage("");
-    setErrorMessage("");
-
-    try {
-      const { error } = await supabase.from("clientes").insert([formData]);
-      if (error) throw error;
-      setSuccessMessage("Cliente cadastrado com sucesso!");
-      setFormData({
-        nome: "",
-        cpf: "",
-        telefone: "",
-        email: "",
-        localidade: "",
-        rua: "",
-        bairro: "",
-        complemento: "",
-        numero: "",
-      });
-    } catch (error) {
-      setErrorMessage(`Erro ao cadastrar cliente: ${error.message}`);
+    if (
+      !formData.nome ||
+      !formData.CPF ||
+      !formData.telefone ||
+      !formData.logra ||
+      !formData.phone ||
+      !formData.CPF
+    ) {
+      setErrorMessage("Por favor preencha todos os campos");
+      return;
     }
+    if (formData.password !== formData.confirmPassword) {
+      setErrorMessage("As senhas não são iguais");
+      return;
+    }
+    try {
+      setErrorMessage("");
+      setLoading(true);
+      const { data, error } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          data: {
+            name: formData.name,
+            phone: formData.phone,
+            CPF: formData.CPF,
+            data_nascimento: formData.data_nascimento,
+          },
+        },
+      });
+      console.log(formData.email);
+
+      if (!error && data) {
+        successMessage(
+          "Cadastro feito com sucesso. Por favor, cheque o seu e-mail para finalizar"
+        );
+      }
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
+    setLoading(false);
   }
 
   return (
@@ -171,6 +196,24 @@ const CadastroCliente = () => {
 
             <div className="mb-4">
               <label
+                htmlFor="cpf"
+                className="block text-gray-700 text-sm font-bold mb-2"
+              >
+                CPF:
+              </label>
+              <input
+                id="cpf"
+                type="text"
+                value={formData.CPF}
+                onChange={handleChange}
+                placeholder="000.000.000-00"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                required
+              />
+            </div>
+
+            <div className="mb-4">
+              <label
                 htmlFor="telefone"
                 className="block text-gray-700 text-sm font-bold mb-2"
               >
@@ -183,24 +226,6 @@ const CadastroCliente = () => {
                 onChange={handleChange}
                 placeholder="Telefone com DDD"
                 className="shadow appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                required
-              />
-            </div>
-
-            <div className="mb-4">
-              <label
-                htmlFor="cpf"
-                className="block text-gray-700 text-sm font-bold mb-2"
-              >
-                CPF:
-              </label>
-              <input
-                id="cpf"
-                type="text"
-                value={formData.cpf}
-                onChange={handleChange}
-                placeholder="000.000.000-00"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 required
               />
             </div>
@@ -225,17 +250,17 @@ const CadastroCliente = () => {
 
             <div className="mb-6">
               <label
-                htmlFor="localidade"
+                htmlFor="logradouro"
                 className="block text-gray-700 text-sm font-bold mb-2"
               >
-                Localidade:
+                Logradouro:
               </label>
               <input
-                id="localidade"
+                id="logradouro"
                 type="text"
-                value={formData.localidade}
+                value={formData.logradouro}
                 onChange={handleChange}
-                placeholder="Localidade"
+                placeholder="Logradouro"
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 required
               />
@@ -243,35 +268,17 @@ const CadastroCliente = () => {
 
             <div className="mb-6">
               <label
-                htmlFor="rua"
+                htmlFor="numero"
                 className="block text-gray-700 text-sm font-bold mb-2"
               >
-                Rua:
+                Número:
               </label>
               <input
-                id="rua"
+                id="numero"
                 type="text"
-                value={formData.rua}
+                value={formData.numero}
                 onChange={handleChange}
-                placeholder="Rua"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                required
-              />
-            </div>
-
-            <div className="mb-6">
-              <label
-                htmlFor="bairro"
-                className="block text-gray-700 text-sm font-bold mb-2"
-              >
-                Bairro:
-              </label>
-              <input
-                id="bairro"
-                type="text"
-                value={formData.bairro}
-                onChange={handleChange}
-                placeholder="Bairro"
+                placeholder="Número"
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 required
               />
@@ -296,17 +303,71 @@ const CadastroCliente = () => {
 
             <div className="mb-6">
               <label
-                htmlFor="numero"
+                htmlFor="bairro"
                 className="block text-gray-700 text-sm font-bold mb-2"
               >
-                Número:
+                Bairro:
               </label>
               <input
-                id="numero"
+                id="bairro"
                 type="text"
-                value={formData.numero}
+                value={formData.bairro}
                 onChange={handleChange}
-                placeholder="Número"
+                placeholder="Bairro"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                required
+              />
+            </div>
+
+            <div className="mb-6">
+              <label
+                htmlFor="CEP"
+                className="block text-gray-700 text-sm font-bold mb-2"
+              >
+                CEP:
+              </label>
+              <input
+                id="CEP"
+                type="text"
+                value={formData.CEP}
+                onChange={handleChange}
+                placeholder="CEP"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                required
+              />
+            </div>
+
+            <div className="mb-6">
+              <label
+                htmlFor="cidade"
+                className="block text-gray-700 text-sm font-bold mb-2"
+              >
+                Cidade:
+              </label>
+              <input
+                id="cidade"
+                type="text"
+                value={formData.cidade}
+                onChange={handleChange}
+                placeholder="Cidade"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                required
+              />
+            </div>
+
+            <div className="mb-6">
+              <label
+                htmlFor="UF"
+                className="block text-gray-700 text-sm font-bold mb-2"
+              >
+                UF:
+              </label>
+              <input
+                id="UF"
+                type="text"
+                value={formData.UF}
+                onChange={handleChange}
+                placeholder="UF"
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 required
               />
