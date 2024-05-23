@@ -17,9 +17,9 @@ const passwordReset = (email) => {
 };
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
   const [auth, setAuth] = useState(false);
-  const [loading, setLoading] = useState(null);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
@@ -27,11 +27,12 @@ const AuthProvider = ({ children }) => {
       const { data } = await supabase.auth.getUser();
       const { user: currentUser } = data;
       setUser(currentUser ?? null);
+      setAuth(currentUser ? true : false);
       setLoading(false);
     };
     getUser();
     const { data } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event == "SIGNED_IN") {
+      if (event === "SIGNED_IN") {
         setUser(session.user);
         setAuth(true);
       } else if (event === "SIGNED_OUT") {
@@ -45,7 +46,9 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ auth, user, login, signOut, passwordReset }}>
+    <AuthContext.Provider
+      value={{ auth, user, loading, login, signOut, passwordReset }}
+    >
       {!loading && children}
     </AuthContext.Provider>
   );
