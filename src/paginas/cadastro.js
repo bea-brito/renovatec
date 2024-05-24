@@ -3,13 +3,20 @@ import imagem from "../componentes/imagens/imagemprincipal1.jpg";
 import Botao from "../componentes/botao/botao.js";
 import supabase from "../supabaseClient.js";
 import { Link } from "react-router-dom";
+import { Alert } from "react-bootstrap";
 
 const Cadastro = () => {
+  const [errorMsg, setErrorMsg] = useState("");
+  const [msg, setMsg] = useState("");
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    nome: "",
-    cpf: "",
+    name: "",
+    CPF: "",
     email: "",
-    senha: "",
+    password: "",
+    confirmPassword: "",
+    phone: "",
+    data_nascimento: "",
   });
 
   console.log(formData);
@@ -23,26 +30,51 @@ const Cadastro = () => {
     });
   }
 
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
+    if (
+      !formData.password ||
+      !formData.email ||
+      !formData.confirmPassword ||
+      !formData.name ||
+      !formData.phone ||
+      !formData.CPF
+    ) {
+      setErrorMsg("Por favor preencha todos os campos");
+      return;
+    }
+    if (formData.password !== formData.confirmPassword) {
+      setErrorMsg("As senhas não são iguais");
+      return;
+    }
     try {
-      const { error } = await supabase.auth.signUp({
+      setErrorMsg("");
+      setLoading(true);
+      const { data, error } = await supabase.auth.signUp({
         email: formData.email,
-        password: formData.senha,
+        password: formData.password,
         options: {
           data: {
-            nome: formData.nome,
-            cpf: formData.cpf,
+            name: formData.name,
+            phone: formData.phone,
+            CPF: formData.CPF,
+            data_nascimento: formData.data_nascimento,
           },
         },
       });
-      if (error) throw error;
-      alert("Cheque o email para validar seu link de verificação");
+      console.log(formData.email);
+
+      if (!error && data) {
+        setMsg(
+          "Cadastro feito com sucesso. Por favor, cheque o seu e-mail para finalizar"
+        );
+      }
     } catch (error) {
+      console.log(error);
       alert(error);
     }
-  }
+    setLoading(false);
+  };
 
   return (
     <div className="flex items-center justify-center h-screen">
@@ -58,25 +90,20 @@ const Cadastro = () => {
         <h3 className="text-2xl font-semibold mb-4 text-yellow-500">
           Cadastro de funcionário
         </h3>
-        {/* {sucesso && (
-          <div className="bg-green-500 text-white py-2 px-4 rounded">
-            Cadastro realizado com sucesso!
-          </div>
-        )} */}
 
         <form className="w-full flex flex-col" onSubmit={handleSubmit}>
           <input
             type="text"
             placeholder="Informe o nome"
             className="w-full text-black py-4 my-2  border-b border-black outline-none focus:outline-none"
-            id="nome"
+            id="name"
             onChange={handleChange}
           />
           <input
             type="text"
             placeholder="Informe o CPF"
             className="w-full text-black py-4 my-2  border-b border-black outline-none focus:outline-none"
-            id="cpf"
+            id="CPF"
             onChange={handleChange}
           />
           <input
@@ -87,30 +114,47 @@ const Cadastro = () => {
             onChange={handleChange}
           />
           <input
-            type="password"
-            placeholder="Informe a senha"
+            type="text"
+            placeholder="Informe o numero de telefone"
             className="w-full text-black py-4 my-2  border-b border-black outline-none focus:outline-none"
-            id="senha"
+            id="phone"
             onChange={handleChange}
           />
-          {/* <input
-            type="password"
+          <input
+            type="text"
+            placeholder="Informe a data de nascimento"
+            className="w-full text-black py-4 my-2  border-b border-black outline-none focus:outline-none"
+            id="data_nascimento"
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            placeholder="Informe a senha"
+            className="w-full text-black py-4 my-2  border-b border-black outline-none focus:outline-none"
+            id="password"
+            onChange={handleChange}
+          />
+          <input
+            type="text"
             placeholder="Confirme sua senha"
             className="w-full text-black py-4 my-2  border-b border-black outline-none focus:outline-none"
-            value={senhaConfirmacao}
-            onChange={(e) => {
-              setSenhaConfirmacao(e.target.value);
-              setErro("");
-            }}
+            id="confirmPassword"
+            onChange={handleChange}
           />
-          {erro && (
-            <div className="bg-red-500 text-white py-2 px-4 rounded">
-              {erro}
-            </div>
-          )} */}
+          {errorMsg && (
+            <Alert variant="danger" onClose={() => setErrorMsg("")} dismissible>
+              {errorMsg}
+            </Alert>
+          )}
+          {msg && (
+            <Alert variant="success" onClose={() => setMsg("")} dismissible>
+              {msg}
+            </Alert>
+          )}
           <Botao
             className="w-1/2 bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded"
             type="submit"
+            disabled={loading}
           >
             {" "}
             Cadastrar{" "}
@@ -118,10 +162,7 @@ const Cadastro = () => {
         </form>
 
         <div className="w-full flex items-center justify-between">
-          <Link
-            to="/"
-            className="mt-2 text-yellow-500 hover:underline"
-          >
+          <Link to="/" className="mt-2 text-yellow-500 hover:underline">
             Já tem uma conta? Faça login
           </Link>
         </div>
