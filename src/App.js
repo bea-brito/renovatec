@@ -1,19 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Login from "./paginas/login.js";
 import Senha from "./paginas/senha.js";
 import Cadastro from "./paginas/cadastro.js";
-import Menu from "./paginas/menu.js";
 import ErroSessao from "./paginas/erroSessao.js";
-import Pneu from "./paginas/pneu.js";
 import HomePage from "./paginas/homePage.js";
 import CadastroCliente from "./paginas/CadastroCliente.js";
 
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import HistoricoDeColeta from "./paginas/HistoricoDeColeta.js";
 import HistoricoCliente from "./paginas/HistoricoCliente.js";
 import AdicionarColeta from "./paginas/AdicionarColeta.js";

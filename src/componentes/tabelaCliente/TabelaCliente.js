@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import { getClienteWithVendedor } from "../../services/clienteCRUD";
+import {
+  getClienteWithVendedor,
+  deleteClienteById,
+} from "../../services/clienteCRUD";
 
 const TabelaCliente = () => {
   const [clientes, setClientes] = useState([]);
@@ -11,42 +14,54 @@ const TabelaCliente = () => {
     }
   };
 
-  const removerCliente = (id) => {};
+  const removerCliente = async (id) => {
+    try {
+      const { error } = await deleteClienteById(id);
+      if (error) {
+        console.log(error);
+        throw error;
+      }
+      await fetchData();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchData = async () => {
+    try {
+      const { data, error } = await getClienteWithVendedor();
+      if (error) {
+        console.log("Error:");
+        console.log(error);
+        throw error;
+      }
+
+      const clientesArray = data.map((item) => ({
+        id: item.ID_Cliente,
+        nome: item.nome,
+        CPF: item.CPF,
+        telefone: item.telefone,
+        email: item.email,
+        logradouro: item.logradouro,
+        numero: item.numero,
+        complemento: item.complemento,
+        bairro: item.bairro,
+        CEP: item.CEP,
+        cidade: item.cidade,
+        UF: item.UF,
+        vendedor: item.Vendedor.nome,
+      }));
+
+      setClientes(clientesArray);
+
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data, error } = await getClienteWithVendedor();
-        if (error) {
-          console.log("Error:");
-          console.log(error);
-          throw error;
-        }
-
-        const clientesArray = data.map((item) => ({
-          id: item.ID_Cliente,
-          nome: item.nome,
-          CPF: item.CPF,
-          telefone: item.telefone,
-          email: item.email,
-          logradouro: item.logradouro,
-          numero: item.numero,
-          complemento: item.complemento,
-          bairro: item.bairro,
-          CEP: item.CEP,
-          cidade: item.cidade,
-          UF: item.UF,
-          vendedor: item.Vendedor.nome,
-        }));
-
-        setClientes(clientesArray);
-
-        console.log(data);
-        return data;
-      } catch (error) {
-        console.log(error);
-      }
-    };
     fetchData();
   }, []);
 

@@ -4,7 +4,6 @@ import { getVendedorByID } from "../services/vendedorCRUD";
 import { useAuth } from "../context/AuthProvider.js";
 
 const PerfilUsuario = () => {
-  const [loading, setLoading] = useState(false);
   const { user } = useAuth();
   const [usuario, setUsuario] = useState({
     nome: "",
@@ -14,7 +13,6 @@ const PerfilUsuario = () => {
   });
 
   useEffect(() => {
-    setLoading(true);
     const fetchData = async () => {
       try {
         const { data, error } = await getVendedorByID(user.id);
@@ -38,7 +36,6 @@ const PerfilUsuario = () => {
       }
     };
     fetchData();
-    setLoading(false);
   }, [user.id]);
 
   return (

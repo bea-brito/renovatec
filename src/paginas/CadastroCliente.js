@@ -7,7 +7,6 @@ import { insertCliente } from "../services/clienteCRUD.js";
 
 const CadastroCliente = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     nomeArray: [],
     id: [],
@@ -89,7 +88,6 @@ const CadastroCliente = () => {
     // }
     try {
       setErrorMessage("");
-      setLoading(true);
       console.log("tentativa");
       const { data, error } = await insertCliente(
         formData.nome,
@@ -116,7 +114,6 @@ const CadastroCliente = () => {
       console.log(error);
       alert(error);
     }
-    setLoading(false);
   }
 
   return (

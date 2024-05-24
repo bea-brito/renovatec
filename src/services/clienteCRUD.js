@@ -41,3 +41,7 @@ export const getClienteWithVendedor = async () => {
       "ID_Cliente,nome,CPF,telefone,email,logradouro,numero,complemento,bairro,CEP,cidade,UF, Vendedor(nome)"
     );
 };
+
+export const deleteClienteById = (id) => {
+  return supabase.from("Cliente").delete().eq("ID_Cliente", id);
+};

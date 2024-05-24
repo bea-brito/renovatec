@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import Sidebar from "../componentes/sidebar/lateral";
 import TabelaCliente from "../componentes/tabelaCliente/TabelaCliente";
-import Botao from "../componentes/botao/botao";
 import Cabecalho from "../componentes/cabecalho/Cabecalho";
 
 const HistoricoClientes = () => {
