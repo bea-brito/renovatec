@@ -134,7 +134,7 @@ const TabelaCliente = () => {
             <td className="px-6 py-4">{cliente.UF}</td>
             <td className="px-6 py-4">
               <Link
-                to={`/editarcoleta/${cliente.id}`}
+                to={`/EditarCliente/${cliente.id}`}
                 className="text-yellow-500 hover:text-yellow-700 mr-2"
               >
                 ✏️

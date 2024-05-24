@@ -5,7 +5,6 @@ import Cadastro from "./paginas/cadastro.js";
 import ErroSessao from "./paginas/erroSessao.js";
 import HomePage from "./paginas/homePage.js";
 import CadastroCliente from "./paginas/CadastroCliente.js";
-
 import { Route, Routes } from "react-router-dom";
 import HistoricoDeColeta from "./paginas/HistoricoDeColeta.js";
 import HistoricoCliente from "./paginas/HistoricoCliente.js";
@@ -13,6 +12,7 @@ import AdicionarColeta from "./paginas/AdicionarColeta.js";
 import VisualizarColeta from "./paginas/visualizarcoleta.js";
 import EditarColeta from "./paginas/editarcoleta.js";
 import PerfilUsuario from "./paginas/perfilUsuario.js";
+import EditarCliente from "./paginas/EditarCliente.js";
 import AuthRoute from "./componentes/autenticacao/AuthRoute.js";
 import { Container } from "react-bootstrap";
 
@@ -40,6 +40,7 @@ function App() {
                 element={<VisualizarColeta />}
               />
               <Route path="/editarcoleta/:id" element={<EditarColeta />} />
+              <Route path="/EditarCliente/:id" element={<EditarCliente />} />
             </Route>
             <Route path="/cadastro" element={<Cadastro />} />
             <Route path="/" element={<Login />} />
