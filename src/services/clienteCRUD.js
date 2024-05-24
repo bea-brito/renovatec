@@ -29,3 +29,15 @@ export const insertCliente = (
     ID_Vendedor: ID_Vendedor,
   });
 };
+
+export const getCliente = async () => {
+  return await supabase.from("Cliente").select();
+};
+
+export const getClienteWithVendedor = async () => {
+  return await supabase
+    .from("Cliente")
+    .select(
+      "ID_Cliente,nome,CPF,telefone,email,logradouro,numero,complemento,bairro,CEP,cidade,UF, Vendedor(nome)"
+    );
+};

@@ -15,6 +15,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import HistoricoDeColeta from "./paginas/HistoricoDeColeta.js";
+import HistoricoCliente from "./paginas/HistoricoCliente.js";
 import AdicionarColeta from "./paginas/AdicionarColeta.js";
 import VisualizarColeta from "./paginas/visualizarcoleta.js";
 import EditarColeta from "./paginas/editarcoleta.js";
@@ -40,6 +41,7 @@ function App() {
                 path="/HistoricoDeColeta"
                 element={<HistoricoDeColeta />}
               />
+              <Route path="/HistoricoCliente" element={<HistoricoCliente />} />
               <Route
                 path="/visualizarcoleta/:id"
                 element={<VisualizarColeta />}

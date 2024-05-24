@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../componentes/sidebar/lateral";
 import Botao from "../componentes/botao/botao";
-import supabase from "../supabaseClient.js";
-import { getVendedor, getVendedorByID } from "../services/vendedorCRUD";
+import { getVendedor } from "../services/vendedorCRUD";
 import { insertCliente } from "../services/clienteCRUD.js";
 
 const CadastroCliente = () => {
@@ -68,7 +67,7 @@ const CadastroCliente = () => {
         console.log(error);
       }
     };
-    const { data } = fetchData();
+    fetchData();
   }, []);
 
   async function handleSubmit(e) {
