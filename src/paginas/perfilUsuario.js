@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../componentes/sidebar/lateral";
-import { getVendedor, getVendedorByID } from "../services/vendedorCRUD";
+import { getVendedorByID } from "../services/vendedorCRUD";
 import { useAuth } from "../context/AuthProvider.js";
 
 const PerfilUsuario = () => {
@@ -37,9 +37,9 @@ const PerfilUsuario = () => {
         console.log(error);
       }
     };
-    const { data } = fetchData();
+    fetchData();
     setLoading(false);
-  }, []);
+  }, [user.id]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
