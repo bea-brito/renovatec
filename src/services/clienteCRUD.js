@@ -1,9 +1,10 @@
 import supabase from "../supabaseClient.js";
 
-export const insetCliente = (
+export const insertCliente = (
   nome,
   CPF,
   telefone,
+  email,
   logradouro,
   numero,
   complemento,
@@ -17,6 +18,7 @@ export const insetCliente = (
     nome: nome,
     CPF: CPF,
     telefone: telefone,
+    email: email,
     logradouro: logradouro,
     numero: numero,
     complemento: complemento,
