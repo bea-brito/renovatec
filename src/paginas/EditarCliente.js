@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import Sidebar from "../componentes/sidebar/lateral.js";
 import Botao from "../componentes/botao/botao.js";
 import { getVendedor } from "../services/vendedorCRUD.js";
-import { insertCliente, getClienteById } from "../services/clienteCRUD.js";
+import { updateCliente, getClienteById } from "../services/clienteCRUD.js";
 
 const EditarCliente = () => {
   const { id } = useParams();
@@ -43,6 +43,7 @@ const EditarCliente = () => {
   console.log(formData);
 
   const fetchDataVendedor = async () => {
+    
     try {
       const { data, error } = await getVendedor();
       if (error) {
@@ -59,7 +60,11 @@ const EditarCliente = () => {
         ids.push(item.ID_Vendedor);
       });
 
-      setFormData({ nomeArray: nomes, id: ids });
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        nomeArray: nomes,
+        id: ids
+      }));
 
       console.log(data);
       return data;
@@ -68,40 +73,41 @@ const EditarCliente = () => {
     }
   };
 
-  // const fetchDataCliente = async () => {
-  //   try {
-  //     const { data, error } = await getClienteById(id);
-  //     if (error) {
-  //       console.log("Error:");
-  //       console.log(error);
-  //       throw error;
-  //     }
+  const fetchDataCliente = async () => {
+    try {
+      
+      const { data, error } = await getClienteById(id);
+      if (error) {
+        console.log("Error:");
+        console.log(error);
+        throw error;
+      }
 
-  //     setFormData({
-  //       nome: data.nome,
-  //       CPF: data.CPF,
-  //       telefone: data.telefone,
-  //       email: data.email,
-  //       logradouro: data.logradouro,
-  //       numero: data.numero,
-  //       complemento: data.complemento,
-  //       bairro: data.bairro,
-  //       CEP: data.CEP,
-  //       cidade: data.cidade,
-  //       UF: data.UF,
-  //       vendedor: data.ID_Vendedor,
-  //     });
-
-  //     console.log(data);
-  //     return data;
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+      setFormData({
+        nome: data[0].nome,
+        CPF: data[0].CPF,
+        telefone: data[0].telefone,
+        email: data[0].email,
+        logradouro: data[0].logradouro,
+        numero: data[0].numero,
+        complemento: data[0].complemento,
+        bairro: data[0].bairro,
+        CEP: data[0].CEP,
+        cidade: data[0].cidade,
+        UF: data[0].UF,
+        vendedor: data[0].ID_Vendedor,
+      });
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
+    fetchDataCliente();
     fetchDataVendedor();
-    // fetchDataCliente();
+    console.log(formData)
   }, []);
 
   async function handleSubmit(e) {
@@ -124,7 +130,8 @@ const EditarCliente = () => {
     try {
       setErrorMessage("");
       console.log("tentativa");
-      const { data, error } = await insertCliente(
+      const { data, error } = await updateCliente(
+        id,
         formData.nome,
         formData.CPF,
         formData.telefone,
@@ -203,7 +210,7 @@ const EditarCliente = () => {
                 required
               >
                 <option value="">Selecione Vendedor</option>
-                {formData.nomeArray.map((nome, index) => (
+                {formData.nomeArray && formData.nomeArray.map((nome, index) => (
                   <option key={index} value={formData.id[index]}>
                     {nome}
                   </option>
