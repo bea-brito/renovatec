@@ -18,7 +18,7 @@ const Senha = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
+    <div className="flex items-center justify-center h-screen w-screen bg-gray-100">
       <div className="max-w-md w-full bg-white p-8 rounded shadow-md">
         <div className="flex items-center mb-8">
           <Link to="/" className="flex items-center text-yellow-500">

@@ -77,7 +77,7 @@ const Cadastro = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex items-center justify-center h-screen w-screen">
       <div className="relative w-1/2 h-full">
         <img
           src={imagem}

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import Sidebar from "../componentes/sidebar/lateral";
 import Cabecalho from "../componentes/cabecalho/Cabecalho";
+import Botao from "../componentes/botao/botao";
 
 const Producao = () => {
   // Estado para controlar a abertura e fechamento da barra lateral
@@ -38,7 +38,7 @@ const Producao = () => {
             <section className="mb-6 bg-gray-100 w-full">
               <h1 className="text-xl font-bold mb-3">Linha de Produção</h1>
               <h2 className="text-xl font-bold mb-2">Dados do Cliente</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 ">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <label
                     className="block text-gray-700 text-sm font-bold mb-2"
@@ -128,29 +128,26 @@ const Producao = () => {
               <h2 className="text-xl font-semibold mb-2">Exame Inicial</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <div>
-                    {/* Dropdown */}
-                    <label
-                      className="block text-gray-700 text-sm font-bold mb-2"
-                      htmlFor="dropdown"
+                  <label
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                    htmlFor="dropdown"
+                  >
+                    Selecionar Examinador:
+                  </label>
+                  <div className="relative">
+                    <select
+                      id="dropdown"
+                      value={selectedOption}
+                      onChange={(e) => handleOptionChange(e.target.value)}
+                      className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
                     >
-                      Selecionar Examinador:
-                    </label>
-                    <div className="relative">
-                      <select
-                        id="dropdown"
-                        value={selectedOption}
-                        onChange={(e) => handleOptionChange(e.target.value)}
-                        className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-                      >
-                        {options.map((option) => (
-                          <option key={option} value={option}>
-                            {option}
-                          </option>
-                        ))}
-                      </select>
-                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"></div>
-                    </div>
+                      {options.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"></div>
                   </div>
                 </div>
                 <div>
@@ -204,7 +201,7 @@ const Producao = () => {
             {/* Seção: Raspa */}
             <section className="mb-6">
               <h2 className="text-xl font-semibold mb-2">Raspa</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label
                     className="block text-gray-700 text-sm font-bold mb-2"
@@ -225,7 +222,6 @@ const Producao = () => {
                         </option>
                       ))}
                     </select>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700" />
                   </div>
                 </div>
                 <div>
@@ -271,8 +267,383 @@ const Producao = () => {
                     </label>
                   </div>
                 </div>
+                <div className="flex items-center">
+                  <label className="block text-gray-700 text-sm font-bold mr-2">
+                    Raio: 120mm
+                  </label>
+                  <label className="block text-gray-700 text-sm font-bold mr-2">
+                    Largura:
+                  </label>
+                  <input id="RetiradaCinta" type="checkbox" className="mr-2" />
+                  <label
+                    htmlFor="RetiradaCinta"
+                    className="block text-gray-700 text-sm font-bold"
+                  >
+                    Retirada de Cinta
+                  </label>
+                </div>
               </div>
             </section>
+
+            <hr className="border-t-2 border-black my-4" />
+
+            {/* Seção: Escareação */}
+            <section className="mb-6">
+              <h2 className="text-xl font-semibold mb-2">Escarenação</h2>
+              <div className="flex items-center mb-2">
+                <label
+                  className="block text-gray-700 text-sm font-bold mr-2"
+                  htmlFor="dropdown"
+                >
+                  Examinador:
+                </label>
+                <select
+                  id="dropdown"
+                  value={selectedOption}
+                  onChange={(e) => handleOptionChange(e.target.value)}
+                  className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                >
+                  {options.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="flex items-center">
+                <div className="mr-4 flex items-center">
+                  <input
+                    type="radio"
+                    id="aprovado"
+                    name="statusEscarenacao"
+                    className="mr-2 leading-tight"
+                  />
+                  <label
+                    htmlFor="aprovado"
+                    className="block text-gray-700 text-sm font-bold"
+                  >
+                    Aprovado
+                  </label>
+                </div>
+                <div className="mr-4 flex items-center">
+                  <input
+                    type="radio"
+                    id="reprovado"
+                    name="statusEscarenacao"
+                    className="mr-2 leading-tight"
+                  />
+                  <label
+                    htmlFor="reprovado"
+                    className="block text-gray-700 text-sm font-bold"
+                  >
+                    Reprovado
+                  </label>
+                </div>
+                <div className="flex items-center">
+                  <input id="Aprovconserto" type="checkbox" className="mr-2" />
+                  <label
+                    htmlFor="Aprovconserto"
+                    className="block text-gray-700 text-sm font-bold"
+                  >
+                    Aprov.conserto
+                  </label>
+                </div>
+              </div>
+            </section>
+
+            <hr className="border-t-2 border-black my-4" />
+
+            {/* Seção: Aplicação de Cola */}
+            <section className="mb-6">
+              <h2 className="text-xl font-semibold mb-2">Aplicação de Cola</h2>
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="dropdown"
+              >
+                Aplicador:
+              </label>
+              <div className="relative">
+                <select
+                  id="dropdown"
+                  value={selectedOption}
+                  onChange={(e) => handleOptionChange(e.target.value)}
+                  className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                >
+                  {options.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </section>
+
+            <hr className="border-t-2 border-black my-4" />
+
+            {/* Seção: Orbicushion */}
+            <section className="mb-6">
+              <h2 className="text-xl font-semibold mb-2">Orbicushion</h2>
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="dropdown"
+              >
+                Aplicador:
+              </label>
+              <div className="relative">
+                <select
+                  id="dropdown"
+                  value={selectedOption}
+                  onChange={(e) => handleOptionChange(e.target.value)}
+                  className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                >
+                  {options.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </section>
+
+            <hr className="border-t-2 border-black my-4" />
+
+            {/* Seção: Corte de Banda */}
+            <section className="mb-6">
+              <h2 className="text-xl font-semibold mb-2">Corte de Banda</h2>
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="dropdown"
+              >
+                Cortador:
+              </label>
+              <div className="flex flex-wrap">
+                <select
+                  id="dropdown"
+                  value={selectedOption}
+                  onChange={(e) => handleOptionChange(e.target.value)}
+                  className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                >
+                  {options.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+                <label className="block text-gray-700 text-sm font-bold mb-2 mt-2 w-full">
+                  Tamanho:
+                </label>
+                <label className="block text-gray-700 text-sm font-bold mb-2 mt-2 w-full">
+                  Desenho:
+                </label>
+              </div>
+            </section>
+
+            <hr className="border-t-2 border-black my-4" />
+
+            {/* Seção: Aplicação de Banda */}
+            <section className="mb-6">
+              <h2 className="text-xl font-semibold mb-2">Aplicação de Banda</h2>
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="dropdown"
+              >
+                Aplicador:
+              </label>
+              <div className="relative">
+                <select
+                  id="dropdown"
+                  value={selectedOption}
+                  onChange={(e) => handleOptionChange(e.target.value)}
+                  className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                >
+                  {options.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </section>
+
+            <hr className="border-t-2 border-black my-4" />
+
+            {/* Seção: Montagem */}
+            <section className="mb-6">
+              <h2 className="text-xl font-semibold mb-2">Montagem</h2>
+              <div className="flex items-center mb-2">
+                <label
+                  className="block text-gray-700 text-sm font-bold w-24"
+                  htmlFor="inserlopeMontador"
+                >
+                  Inserlope:
+                </label>
+                <span className="text-gray-700 text-sm font-bold mr-2 ml-10">
+                  Montador
+                </span>
+                <select
+                  id="inserlopeMontador"
+                  value={selectedOption}
+                  onChange={(e) => handleOptionChange(e.target.value)}
+                  className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                >
+                  {options.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="flex items-center">
+                <label
+                  className="block text-gray-700 text-sm font-bold w-24"
+                  htmlFor="envelopeMontador"
+                >
+                  Envelope:
+                </label>
+                <span className="text-gray-700 text-sm font-bold mr-2 ml-10">
+                  Montador
+                </span>
+                <select
+                  id="envelopeMontador"
+                  value={selectedOption}
+                  onChange={(e) => handleOptionChange(e.target.value)}
+                  className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                >
+                  {options.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </section>
+
+            <hr className="border-t-2 border-black my-4" />
+
+            {/* Seção: Autoclave */}
+            <section className="mb-6">
+              <h2 className="text-xl font-semibold mb-2">Autoclave</h2>
+              <div className="flex">
+                <label className="text-gray-700 text-sm font-bold mr-2 ml-10">
+                  Carga:
+                </label>
+                <span className="text-gray-700 text-sm font-bold mr-2 ml-10">
+                  Autoclave:
+                </span>
+                <select
+                  id="envelopeMontador"
+                  value={selectedOption}
+                  onChange={(e) => handleOptionChange(e.target.value)}
+                  className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                >
+                  {options.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+                <label className="text-gray-700 text-sm font-bold mr-10 ml-10">
+                  Posição:
+                </label>
+              </div>
+            </section>
+
+            <hr className="border-t-2 border-black my-4" />
+
+            {/* Seção: Exame Final */}
+            <section className="mb-6">
+              <h2 className="text-xl font-semibold mb-2">Exame Final</h2>
+              <div className="flex">
+                <span className="text-gray-700 text-sm font-bold mr-2 ml-10">
+                  Examinador:
+                </span>
+                <select
+                  id="ExaminadorExFinal"
+                  value={selectedOption}
+                  onChange={(e) => handleOptionChange(e.target.value)}
+                  className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                >
+                  {options.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+                <input
+                  id="dataExame"
+                  type="date"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 ml-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+              <div className="flex items-center">
+                <div className="flex items-center ml-4 mt-3">
+                  <input
+                    type="radio"
+                    id="aprovado"
+                    name="statusExameFinal"
+                    className="mr-2 leading-tight"
+                  />
+                  <label
+                    htmlFor="aprovado"
+                    className="block text-gray-700 text-sm font-bold"
+                  >
+                    Aprovado
+                  </label>
+                </div>
+
+                <div className="flex items-center ml-4 mt-3">
+                  <input
+                    type="radio"
+                    id="reprovado"
+                    name="statusExameFinal"
+                    className="mr-2 leading-tight"
+                  />
+                  <label
+                    htmlFor="reprovado"
+                    className="block text-gray-700 text-sm font-bold"
+                  >
+                    Reprovado
+                  </label>
+                </div>
+                <div className="flex items-center mt-3">
+                  <input
+                    id="Aprovconserto"
+                    type="checkbox"
+                    className="mr-2 ml-2"
+                  />
+                  <label
+                    htmlFor="Aprovconserto"
+                    className="block text-gray-700 text-sm font-bold"
+                  >
+                    Reprocesso
+                  </label>
+                </div>
+                <div className="flex items-center mt-3">
+                  <input
+                    id="Aprovconserto"
+                    type="checkbox"
+                    className="mr-2 ml-2"
+                  />
+                  <label
+                    htmlFor="Aprovconserto"
+                    className="block text-gray-700 text-sm font-bold"
+                  >
+                    Retrabalho
+                  </label>
+                </div>
+              </div>
+            </section>
+
+            <hr className="border-t-2 border-black my-4" />
+
+            <div className="flex justify-center mt-4">
+              <Botao
+                className="w-1/4  bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600"
+                type="submit"
+              >
+                Salvar
+              </Botao>
+            </div>
           </div>
         </div>
       </div>
