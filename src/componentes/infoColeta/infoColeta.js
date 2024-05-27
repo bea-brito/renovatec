@@ -1,26 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { getClienteWithVendedor } from "../../services/clienteCRUD";
 
-const InfoColeta = ({ pneus, adicionarPneu, infoGeral, setInfoGeral }) => {
-  const [clienteData, setClienteData] = useState({
-    id: [],
-    cliente: [],
-    vendedor: [],
-    telefone: [],
-    idSelecionado: "",
-    indexSelecionado: "",
-  });
-
-  const [novoPneu, setNovoPneu] = useState({
-    quantidade: "",
-    matricula: "",
-    marca: "",
-    modelo: "",
-    tamanho: "",
-    dot: "",
-    servico: "",
-  });
-
+const InfoColeta = ({
+  pneus,
+  pneuData,
+  setPneuData,
+  clienteData,
+  setClienteData,
+}) => {
   const fetchCliente = async () => {
     try {
       const { data, error } = await getClienteWithVendedor();
@@ -61,18 +48,10 @@ const InfoColeta = ({ pneus, adicionarPneu, infoGeral, setInfoGeral }) => {
   }, []);
 
   const handleChangePneu = (e) => {
-    const { name, value } = e.target;
-    setNovoPneu((prev) => ({
+    const { id, value } = e.target;
+    setPneuData((prev) => ({
       ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleChangeGeral = (e) => {
-    const { name, value } = e.target;
-    setInfoGeral((prev) => ({
-      ...prev,
-      [name]: value,
+      [id]: value,
     }));
   };
 
@@ -84,24 +63,24 @@ const InfoColeta = ({ pneus, adicionarPneu, infoGeral, setInfoGeral }) => {
       [id]: value,
     });
   };
-  console.log(clienteData.idSelecionado);
+  console.log(pneuData);
 
-  const handleAddPneu = () => {
-    if (Object.values(novoPneu).some((value) => value === "")) {
-      alert("Por favor, preencha todos os campos antes de adicionar.");
-      return;
-    }
-    adicionarPneu(novoPneu);
-    setNovoPneu({
-      quantidade: "",
-      matricula: "",
-      marca: "",
-      modelo: "",
-      tamanho: "",
-      dot: "",
-      servico: "",
-    });
-  };
+  // const handleAddPneu = () => {
+  //   if (Object.values(pneuData).some((value) => value === "")) {
+  //     alert("Por favor, preencha todos os campos antes de adicionar.");
+  //     return;
+  //   }
+  //   adicionarPneu(pneuData);
+  //   setpneuData({
+  //     quantidade: "",
+  //     matricula: "",
+  //     marca: "",
+  //     modelo: "",
+  //     tamanho: "",
+  //     dot: "",
+  //     servico: "",
+  //   });
+  // };
 
   return (
     <div className="flex-1 transition-margin duration-300 p-4">
@@ -126,7 +105,7 @@ const InfoColeta = ({ pneus, adicionarPneu, infoGeral, setInfoGeral }) => {
         </select>
         <input
           type="text"
-          name="vendedor"
+          id="vendedor"
           placeholder="Nome do Vendedor"
           value={clienteData.vendedor[clienteData.indexSelecionado]}
           onChange={handleChangeCliente}
@@ -135,7 +114,7 @@ const InfoColeta = ({ pneus, adicionarPneu, infoGeral, setInfoGeral }) => {
         />
         <input
           type="tel"
-          name="telefone"
+          id="telefone"
           placeholder="Telefone para Contato"
           onChange={handleChangeCliente}
           value={clienteData.telefone[clienteData.indexSelecionado]}
@@ -144,10 +123,10 @@ const InfoColeta = ({ pneus, adicionarPneu, infoGeral, setInfoGeral }) => {
         />
         <input
           type="date"
-          name="dataPedido"
+          id="date"
           placeholder="Data do Pedido"
-          value={infoGeral.dataPedido}
-          onChange={handleChangeGeral}
+          value={clienteData.date}
+          onChange={handleChangeCliente}
           className="w-full border border-gray-300 rounded-lg p-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
@@ -156,23 +135,23 @@ const InfoColeta = ({ pneus, adicionarPneu, infoGeral, setInfoGeral }) => {
       <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
         <input
           type="number"
-          name="quantidade"
-          placeholder="Quantidade"
-          value={novoPneu.quantidade}
+          id="codigoPneu"
+          placeholder="Codigo do Pneu"
+          value={pneuData.codigoPneu}
           onChange={handleChangePneu}
           className="w-full border border-gray-300 rounded-lg p-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <input
           type="text"
-          name="matricula"
+          id="matricula"
           placeholder="Matrícula"
-          value={novoPneu.matricula}
+          value={pneuData.matricula}
           onChange={handleChangePneu}
           className="w-full border border-gray-300 rounded-lg p-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <select
-          name="marca"
-          value={novoPneu.marca}
+          id="marca"
+          value={pneuData.marca}
           onChange={handleChangePneu}
           className="w-full border border-gray-300 rounded-lg p-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
@@ -181,8 +160,8 @@ const InfoColeta = ({ pneus, adicionarPneu, infoGeral, setInfoGeral }) => {
           <option value="Marca2">Marca2</option>
         </select>
         <select
-          name="modelo"
-          value={novoPneu.modelo}
+          id="modelo"
+          value={pneuData.modelo}
           onChange={handleChangePneu}
           className="w-full border border-gray-300 rounded-lg p-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
@@ -192,23 +171,23 @@ const InfoColeta = ({ pneus, adicionarPneu, infoGeral, setInfoGeral }) => {
         </select>
         <input
           type="text"
-          name="tamanho"
+          id="tamanho"
           placeholder="Tamanho"
-          value={novoPneu.tamanho}
+          value={pneuData.tamanho}
           onChange={handleChangePneu}
           className="w-full border border-gray-300 rounded-lg p-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <input
           type="text"
-          name="dot"
+          id="dot"
           placeholder="DOT"
-          value={novoPneu.dot}
+          value={pneuData.dot}
           onChange={handleChangePneu}
           className="w-full border border-gray-300 rounded-lg p-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <select
-          name="servico"
-          value={novoPneu.servico}
+          id="servico"
+          value={pneuData.servico}
           onChange={handleChangePneu}
           className="w-full border border-gray-300 rounded-lg p-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
@@ -216,8 +195,16 @@ const InfoColeta = ({ pneus, adicionarPneu, infoGeral, setInfoGeral }) => {
           <option value="Recapagem">Recapagem</option>
           <option value="Manutenção">Manutenção</option>
         </select>
+        <input
+          type="text"
+          id="valor"
+          placeholder="Valor"
+          value={pneuData.valor}
+          onChange={handleChangePneu}
+          className="w-full border border-gray-300 rounded-lg p-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
         <button
-          onClick={handleAddPneu}
+          // onClick={handleAddPneu}
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 col-span-1 md:col-span-2"
         >
           Adicionar pneu
