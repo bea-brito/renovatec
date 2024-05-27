@@ -168,11 +168,12 @@ const CadastroCliente = () => {
                 required
               >
                 <option value="">Selecione Vendedor</option>
-                {formData.nomeArray.map((nome, index) => (
-                  <option key={index} value={formData.id[index]}>
-                    {nome}
-                  </option>
-                ))}
+                {formData.nomeArray &&
+                  formData.nomeArray.map((nome, index) => (
+                    <option key={index} value={formData.id[index]}>
+                      {nome}
+                    </option>
+                  ))}
               </select>
             </div>
             <div className="mb-4">
