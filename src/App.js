@@ -40,16 +40,17 @@ function App() {
                 path="/visualizarcoleta/:id"
                 element={<VisualizarColeta />}
               />
+              <Route 
+              path="/Producao/:id" 
+              element={<Producao />} 
+              />
               <Route path="/editarcoleta/:id" element={<EditarColeta />} />
               <Route path="/EditarCliente/:id" element={<EditarCliente />} />
             </Route>
             <Route path="/cadastro" element={<Cadastro />} />
             <Route path="/" element={<Login />} />
             <Route path="/senha" element={<Senha />} />
-            <Route path="/Producao" element={<Producao />} />
             <Route path="/erroSessao" element={<ErroSessao />} />
-            {/* <Route path="/menu" element={<Menu />} />
-            <Route path="/pneu" element={<Pneu />} /> */}
           </Routes>
         </div>
       </Container>

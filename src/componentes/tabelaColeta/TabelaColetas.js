@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Modal from '../modal/modal';
 
 const TabelaColetas = ({ coletas, removerColeta }) => {
+  const [isModalOpen, setModalOpen] = useState(false);
+
   const handleRemoveColeta = (id) => {
     if (window.confirm("Tem certeza que deseja excluir? 🤨")) {
       removerColeta(id);
@@ -9,6 +12,7 @@ const TabelaColetas = ({ coletas, removerColeta }) => {
   };
 
   return (
+    <>
     <table className="min-w-full table-auto text-sm text-left text-gray-500 dark:text-gray-400 shadow-xl">
       <thead className="text-xs text-white uppercase bg-black dark:bg-blue-700">
         <tr>
@@ -27,7 +31,7 @@ const TabelaColetas = ({ coletas, removerColeta }) => {
             <td className="px-6 py-4">{coleta.data}</td>
             <td className="px-6 py-4">{coleta.cliente}</td>
             <td className="px-6 py-4 text-blue-500 hover:text-blue-700 cursor-pointer">
-              <button>Gerar QRCode</button>
+            <button onClick={() => setModalOpen(true)}>Gerar QRCode</button>
             </td>
             <td className="px-6 py-4">
               <Link to={`/visualizarcoleta/${coleta.id}`} 
@@ -52,6 +56,11 @@ const TabelaColetas = ({ coletas, removerColeta }) => {
         ))}
       </tbody>
     </table>
+      <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
+      <p>ID da Coleta: <strong>{/* ID da coleta selecionada */}</strong></p>
+      {/* Inclua outros detalhes que desejar mostrar no modal */}
+    </Modal>
+</>
   );
 };
 
