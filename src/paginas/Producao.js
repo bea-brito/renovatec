@@ -1,9 +1,25 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Altere para useNavigate
 import Sidebar from "../componentes/sidebar/lateral";
 import Cabecalho from "../componentes/cabecalho/Cabecalho";
 import Botao from "../componentes/botao/botao";
+import Modal from "../componentes/modal/modal"; // Certifique-se de que este é o caminho correto
 
-const Producao = () => {
+const Producao = ({idDaColeta}) => {
+  const navigate = useNavigate(); // Hook para navegar
+  const [modalOpen, setModalOpen] = useState(false); // Estado para controlar o modal
+
+  // Função chamada quando o botão Salvar é pressionado
+  const handleSave = () => {
+    setModalOpen(true); // Abre o modal
+  };
+
+  // Função para fechar o modal e redirecionar
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    console.log(idDaColeta); // Verifique o valor de idDaColeta
+    navigate(`/visualizarcoleta/${idDaColeta}`);
+  };
   // Estado para controlar a abertura e fechamento da barra lateral
   const [isOpen, setIsOpen] = useState(false);
 
@@ -638,8 +654,8 @@ const Producao = () => {
 
             <div className="flex justify-center mt-4">
               <Botao
-                className="w-1/4  bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600"
-                type="submit"
+                onClick={handleSave}
+                className="w-1/4 bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600"
               >
                 Salvar
               </Botao>
@@ -647,6 +663,11 @@ const Producao = () => {
           </div>
         </div>
       </div>
+      {modalOpen && (
+        <Modal isOpen={modalOpen} onClose={handleCloseModal}>
+          <p>Coleta salva com sucesso!</p>
+        </Modal>
+      )}
     </div>
   );
 };
