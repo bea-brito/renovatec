@@ -2,13 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../componentes/sidebar/lateral";
 import Botao from "../componentes/botao/botao";
-import supabase from "../supabaseClient.js";
-import { getVendedor, getVendedorByID } from "../services/vendedorCRUD";
+import { getVendedor } from "../services/vendedorCRUD";
 import { insertCliente } from "../services/clienteCRUD.js";
 
 const CadastroCliente = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     nomeArray: [],
     id: [],
@@ -68,45 +66,47 @@ const CadastroCliente = () => {
         console.log(error);
       }
     };
-    const { data } = fetchData();
+    fetchData();
   }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
-    if (
-      !formData.nome ||
-      !formData.CPF ||
-      !formData.telefone ||
-      !formData.logra ||
-      !formData.phone ||
-      !formData.CPF
-    ) {
-      setErrorMessage("Por favor preencha todos os campos");
-      return;
-    }
-    if (formData.password !== formData.confirmPassword) {
-      setErrorMessage("As senhas não são iguais");
-      return;
-    }
+    // if (
+    //   !formData.vendedor ||
+    //   !formData.nome ||
+    //   !formData.CPF ||
+    //   !formData.telefone ||
+    //   !formData.email ||
+    //   !formData.logradouro ||
+    //   !formData.bairro ||
+    //   !formData.CEP ||
+    //   !formData.cidade ||
+    //   !formData.UF
+    // ) {
+    //   setErrorMessage("Por favor preencha todos os campos");
+    //   return;
+    // }
     try {
       setErrorMessage("");
-      setLoading(true);
-      const { data, error } = await supabase.auth.signUp({
-        email: formData.email,
-        password: formData.password,
-        options: {
-          data: {
-            name: formData.name,
-            phone: formData.phone,
-            CPF: formData.CPF,
-            data_nascimento: formData.data_nascimento,
-          },
-        },
-      });
-      console.log(formData.email);
-
+      console.log("tentativa");
+      const { data, error } = await insertCliente(
+        formData.nome,
+        formData.CPF,
+        formData.telefone,
+        formData.email,
+        formData.logradouro,
+        formData.numero,
+        formData.complemento,
+        formData.bairro,
+        formData.CEP,
+        formData.cidade,
+        formData.UF,
+        formData.vendedor
+      );
+      console.log(formData.CPF);
+      if (error) setErrorMessage(error.message);
       if (!error && data) {
-        successMessage(
+        setSuccessMessage(
           "Cadastro feito com sucesso. Por favor, cheque o seu e-mail para finalizar"
         );
       }
@@ -114,11 +114,10 @@ const CadastroCliente = () => {
       console.log(error);
       alert(error);
     }
-    setLoading(false);
   }
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen w-screen">
       <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
       <div
         className="flex-1"
@@ -202,7 +201,7 @@ const CadastroCliente = () => {
                 CPF:
               </label>
               <input
-                id="cpf"
+                id="CPF"
                 type="text"
                 value={formData.CPF}
                 onChange={handleChange}

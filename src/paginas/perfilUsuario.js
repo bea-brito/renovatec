@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../componentes/sidebar/lateral";
-import { getVendedor, getVendedorByID } from "../services/vendedorCRUD";
+import { getVendedorByID } from "../services/vendedorCRUD";
 import { useAuth } from "../context/AuthProvider.js";
 
 const PerfilUsuario = () => {
-  const [loading, setLoading] = useState(false);
   const { user } = useAuth();
   const [usuario, setUsuario] = useState({
     nome: "",
@@ -14,7 +13,6 @@ const PerfilUsuario = () => {
   });
 
   useEffect(() => {
-    setLoading(true);
     const fetchData = async () => {
       try {
         const { data, error } = await getVendedorByID(user.id);
@@ -37,12 +35,11 @@ const PerfilUsuario = () => {
         console.log(error);
       }
     };
-    const { data } = fetchData();
-    setLoading(false);
-  }, []);
+    fetchData();
+  }, [user.id]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex flex-col items-center justify-center w-screen min-h-screen bg-gray-100">
       <Sidebar />
       <div className="bg-white shadow-md rounded p-8 w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6">Perfil do Usuário</h2>

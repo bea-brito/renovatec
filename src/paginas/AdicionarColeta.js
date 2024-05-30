@@ -43,7 +43,7 @@ const AdicionarColeta = () => {
     };
 
     return (
-        <div className="flex h-screen bg-gray-100">
+        <div className="flex h-screen bg-gray-100 w-screen">
             <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
             <div className={`flex-1 ${isOpen ? 'ml-60' : 'ml-10'} transition-margin duration-300 p-4`}>
                 <h2 className="text-lg font-bold mb-4">Adicionar Nova Coleta</h2>
