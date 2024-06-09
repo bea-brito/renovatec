@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Sidebar from "../componentes/sidebar/lateral";
-import Cards from "../componentes/cards/cards";
+import TabelaCliente from "../componentes/tabelaCliente/TabelaCliente";
 import Cabecalho from "../componentes/cabecalho/Cabecalho";
 
-const HomePage = () => {
+const HistoricoClientes = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -11,17 +11,14 @@ const HomePage = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen w-screen bg-gray-100">
+    <div className="flex flex-col h-screen bg-gray-100 w-screen">
       <Cabecalho />
       <div className="flex flex-grow">
         <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
-        <div
-          className={`ml-${
-            isOpen ? "60" : "10"
-          } flex-1 flex justify-center px-4`}
-        >
-          <div className={`w-full max-w-screen-md`}>
-            <Cards />
+        <div className={`ml-${isOpen ? "60" : "10"} flex-1 flex flex-col px-4`}>
+          <div className="container mx-auto">
+            <h1 className="text-lg font-bold my-4">Histórico de Clientes</h1>
+            <TabelaCliente />
           </div>
         </div>
       </div>
@@ -29,4 +26,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default HistoricoClientes;
