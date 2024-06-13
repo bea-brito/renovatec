@@ -11,7 +11,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-100">
+    <div className="flex flex-col h-screen w-screen bg-gray-100">
       <Cabecalho />
       <div className="flex flex-grow">
         <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />

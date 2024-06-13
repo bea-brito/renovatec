@@ -117,7 +117,7 @@ const CadastroCliente = () => {
   }
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen w-screen">
       <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
       <div
         className="flex-1"
