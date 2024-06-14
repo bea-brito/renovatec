@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Sidebar from "../componentes/sidebar/lateral";
 import InfoColeta from "../componentes/infoColeta/infoColeta";
+import InfoPneu from "../componentes/infoColeta/InfoPneu.js";
 import { insertColeta } from "../services/coletaCRUD";
 import { Alert } from "react-bootstrap";
 import supabase from "../supabaseClient.js";
@@ -99,11 +100,10 @@ const AdicionarColeta = () => {
         } transition-margin duration-300 p-4`}
       >
         <h2 className="text-lg font-bold mb-4">Adicionar Nova Coleta</h2>
-        <InfoColeta
+        <InfoColeta clienteData={clienteData} setClienteData={setClienteData} />
+        <InfoPneu
           pneus={coletaInfo.pneus}
           adicionarPneu={adicionarPneu}
-          clienteData={clienteData}
-          setClienteData={setClienteData}
           pneuData={pneuData}
           setPneuData={setPneuData}
         />
