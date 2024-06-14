@@ -13,6 +13,7 @@ import VisualizarColeta from "./paginas/visualizarcoleta.js";
 import EditarColeta from "./paginas/editarcoleta.js";
 import PerfilUsuario from "./paginas/perfilUsuario.js";
 import EditarCliente from "./paginas/EditarCliente.js";
+import AdicionarPneu from "./paginas/AdicionarPneu.js";
 import Producao from "./paginas/Producao.js";
 import AuthRoute from "./componentes/autenticacao/AuthRoute.js";
 import { Container } from "react-bootstrap";
@@ -43,6 +44,7 @@ function App() {
               <Route path="/Producao/:id" element={<Producao />} />
               <Route path="/editarcoleta/:id" element={<EditarColeta />} />
               <Route path="/EditarCliente/:id" element={<EditarCliente />} />
+              <Route path="/AdicionarPneu/:id" element={<AdicionarPneu />} />
             </Route>
             <Route path="/cadastro" element={<Cadastro />} />
             <Route path="/" element={<Login />} />
