@@ -55,3 +55,37 @@ export const getPneuByColeta = async (id) => {
     throw error;
   }
 };
+
+export const updatePneu = async (
+  id,
+  codigo_pneu,
+  matricula,
+  tamanho,
+  marca,
+  modelo,
+  DOT,
+  servico,
+  valor,
+  ID_Coleta
+) => {
+  try {
+    const response = await axios.put(`${apiUrl}/pneus/${id}`, {
+      codigo_pneu,
+      matricula,
+      tamanho,
+      marca,
+      modelo,
+      DOT,
+      servico,
+      valor,
+      ID_Coleta,
+    });
+    if (!response) {
+      throw new Error("Erro ao atualizar cliente");
+    }
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

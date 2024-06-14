@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { getClienteWithVendedor } from "../../services/clienteCRUD";
 
 const InfoColeta = ({ clienteData, setClienteData }) => {
@@ -39,6 +39,7 @@ const InfoColeta = ({ clienteData, setClienteData }) => {
 
   useEffect(() => {
     fetchCliente();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChangeCliente = (event) => {

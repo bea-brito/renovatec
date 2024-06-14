@@ -114,6 +114,18 @@ const VisualizarColeta = ({ token }) => {
             ))}
           </tbody>
         </table>
+        <br />
+        <Link
+          to={`/AdicionarPneu/${id}`}
+          className="text-green-500 hover:text-green-700 mr-2"
+        >
+          <button
+            // onClick={handleAddPneu}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 col-span-1 md:col-span-2"
+          >
+            Adicionar pneu
+          </button>
+        </Link>
       </div>
     </div>
   );

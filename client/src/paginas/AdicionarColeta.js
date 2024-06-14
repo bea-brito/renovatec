@@ -42,8 +42,6 @@ const AdicionarColeta = () => {
     pneus: [],
   });
 
-  const navigate = useNavigate();
-
   const adicionarPneu = (novoPneu) => {
     setColetaInfo((prev) => ({
       ...prev,

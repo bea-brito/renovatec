@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { getClienteWithVendedor } from "../../services/clienteCRUD";
 
 const InfoPneu = ({ pneus, pneuData, setPneuData, setClienteData }) => {
@@ -39,6 +39,7 @@ const InfoPneu = ({ pneus, pneuData, setPneuData, setClienteData }) => {
 
   useEffect(() => {
     fetchCliente();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChangePneu = (e) => {

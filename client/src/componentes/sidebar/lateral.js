@@ -9,7 +9,6 @@ import {
   faHouse,
   faArrowRight,
   faArrowLeft,
-  faTractor,
 } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../../context/AuthProvider";
 
