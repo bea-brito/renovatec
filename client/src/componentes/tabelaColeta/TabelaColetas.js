@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Modal from "../modal/modal";
-import { getColetaWithCliente } from "../../services/coletaCRUD";
+import {
+  getColetaWithCliente,
+  deleteColetaById,
+} from "../../services/coletaCRUD";
 
 const TabelaColetas = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -9,16 +12,30 @@ const TabelaColetas = () => {
   const [selectedCliente, setSelectedCliente] = useState(null); // Adiciona um estado para armazenar o nome do cliente selecionado
   const [coletas, setColetas] = useState([]);
 
-  // const handleRemoveColeta = (id) => {
-  //   if (window.confirm("Tem certeza que deseja excluir? 🤨")) {
-  //     removerColeta(id);
-  //   }
-  // };
+  const handleRemoveColeta = (id) => {
+    if (window.confirm("Tem certeza que deseja excluir? 🤨")) {
+      removerColeta(id);
+    }
+    fetchData();
+  };
 
   const handleOpenModal = (id, cliente) => {
     setSelectedColetaId(id); // Define o ID da coleta selecionada
     setSelectedCliente(cliente);
     setModalOpen(true); // Abre o modal
+  };
+
+  const removerColeta = async (id) => {
+    try {
+      const { error } = await deleteColetaById(id);
+      if (error) {
+        console.log(error);
+        throw error;
+      }
+      await fetchData();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const fetchData = async () => {
@@ -105,14 +122,15 @@ const TabelaColetas = () => {
                   ✏️
                 </Link>
                 <button
-                  // onClick={() => handleRemoveColeta(coleta.id)}
+                  onClick={() => handleRemoveColeta(coleta.id)}
                   className="text-red-500 hover:text-red-700"
                 >
                   🗑️
                 </button>
               </td>
               <td className="px-6 py-4">
-                <select
+                {coleta.status}
+                {/* <select
                   defaultValue={coleta.status}
                   className="form-select block w-full mt-1 border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 rounded-md"
                 >
@@ -120,7 +138,7 @@ const TabelaColetas = () => {
                   <option value="Em produção">Em produção</option>
                   <option value="Produzido">Produzido</option>
                   <option value="Entregue">Entregue</option>
-                </select>
+                </select> */}
               </td>
             </tr>
           ))}

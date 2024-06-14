@@ -58,3 +58,16 @@ export const getColetaWithCliente = async () => {
     throw error;
   }
 };
+
+export const deleteColetaById = async (id) => {
+  try {
+    const response = await axios.delete(`${apiUrl}/coletas-deletar/${id}`);
+    if (!response) {
+      throw new Error("Erro ao deletar coleta");
+    }
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
