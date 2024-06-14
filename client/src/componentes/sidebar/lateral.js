@@ -80,15 +80,16 @@ const Sidebar = () => {
           />
           {/* <SidebarItem icon={<FontAwesomeIcon icon={faTractor} size="lg" />} itemName="Produção" isOpen={isOpen} /> */}
         </Link>
-
+        <Link to="/HistoricoCliente">
+          <SidebarItem
+            icon={<FontAwesomeIcon icon={faGear} size="lg" />}
+            itemName="Cliente"
+            isOpen={isOpen}
+          />
+        </Link>
         <SidebarItem
           icon={<FontAwesomeIcon icon={faGear} size="lg" />}
           itemName="Faturamento"
-          isOpen={isOpen}
-        />
-        <SidebarItem
-          icon={<FontAwesomeIcon icon={faGear} size="lg" />}
-          itemName="Cliente"
           isOpen={isOpen}
         />
         <div className="absolute bottom-0 left-0 w-full">

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Sidebar from "../componentes/sidebar/lateral";
 import TabelaColetas from "../componentes/tabelaColeta/TabelaColetas";
 import Botao from "../componentes/botao/botao";
@@ -7,46 +7,9 @@ import Cabecalho from "../componentes/cabecalho/Cabecalho";
 
 const HistoricoDeColeta = ({ token }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [coletas, setColetas] = useState([
-    { id: 1, data: "2023-05-01", cliente: "João", status: "Recebido" },
-    {
-      id: 2,
-      data: "2023-05-02",
-      cliente: "Ronildo César",
-      status: "Em produção",
-    },
-    { id: 3, data: "2023-05-03", cliente: "Sindônibus", status: "Produzido" },
-  ]);
-  const [addedIds, setAddedIds] = useState(new Set([1, 2, 3]));
-
-  useEffect(() => {
-    const novaColeta = location.state?.novaColeta;
-    if (novaColeta && !addedIds.has(novaColeta.idColeta)) {
-      const coletaAdicionada = {
-        id: novaColeta.idColeta,
-        data: novaColeta.dataPedido,
-        cliente: novaColeta.cliente,
-        status: "Nova",
-      };
-      setColetas((prevColetas) => [...prevColetas, coletaAdicionada]);
-      setAddedIds((prevIds) => new Set(prevIds.add(novaColeta.idColeta)));
-      navigate("/historicoDeColeta", { replace: true, state: {} }); // Limpar o estado para evitar reprocessamento
-    }
-  }, [location.state, navigate, addedIds]);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
-  };
-
-  const removerColeta = (id) => {
-    setColetas(coletas.filter((coleta) => coleta.id !== id));
-    setAddedIds((prevIds) => {
-      const newSet = new Set(prevIds);
-      newSet.delete(id);
-      return newSet;
-    });
   };
 
   return (

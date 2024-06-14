@@ -42,3 +42,16 @@ export const insertPneu = async (
     throw error;
   }
 };
+
+export const getPneuByColeta = async (id) => {
+  try {
+    const response = await axios.get(`${apiUrl}/pneus-by-coleta/${id}`);
+    if (!response) {
+      throw new Error("Erro ao buscar cliente por ID");
+    }
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
