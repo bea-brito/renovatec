@@ -40,3 +40,21 @@ export const getColeta = async () => {
     throw error;
   }
 };
+
+export const getColetaWithCliente = async () => {
+  try {
+    const response = await axios.get(`${apiUrl}/coletas-with-cliente`);
+    console.log("Response from server:", response);
+
+    if (!response) {
+      throw new Error("Erro ao buscar coletas");
+    }
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error in getColeta service:",
+      error.response ? error.response.data : error.message
+    );
+    throw error;
+  }
+};

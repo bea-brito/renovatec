@@ -1,24 +1,54 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Modal from "../modal/modal";
+import { getColetaWithCliente } from "../../services/coletaCRUD";
 
-const TabelaColetas = ({ coletas, removerColeta }) => {
+const TabelaColetas = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedColetaId, setSelectedColetaId] = useState(null); // Adiciona um estado para armazenar o ID da coleta selecionada
   const [selectedCliente, setSelectedCliente] = useState(null); // Adiciona um estado para armazenar o nome do cliente selecionado
+  const [coletas, setColetas] = useState([]);
 
-
-  const handleRemoveColeta = (id) => {
-    if (window.confirm("Tem certeza que deseja excluir? 🤨")) {
-      removerColeta(id);
-    }
-  };
+  // const handleRemoveColeta = (id) => {
+  //   if (window.confirm("Tem certeza que deseja excluir? 🤨")) {
+  //     removerColeta(id);
+  //   }
+  // };
 
   const handleOpenModal = (id, cliente) => {
     setSelectedColetaId(id); // Define o ID da coleta selecionada
-    setSelectedCliente(cliente)
+    setSelectedCliente(cliente);
     setModalOpen(true); // Abre o modal
   };
+
+  const fetchData = async () => {
+    try {
+      const { data, error } = await getColetaWithCliente();
+      if (error) {
+        console.log("Error:");
+        console.log(error);
+        throw error;
+      }
+
+      const coletasArray = data.map((item) => ({
+        id: item.ID_Coleta,
+        data: item.data,
+        status: item.status,
+        cliente: item.Cliente.nome,
+      }));
+
+      setColetas(coletasArray);
+
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -46,16 +76,18 @@ const TabelaColetas = ({ coletas, removerColeta }) => {
           </tr>
         </thead>
         <tbody>
-          {coletas.map((coleta) => (
+          {coletas.map((coleta, index) => (
             <tr
-              key={coleta.id}
+              key={index}
               className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700"
             >
               <td className="px-6 py-4">{coleta.id}</td>
               <td className="px-6 py-4">{coleta.data}</td>
               <td className="px-6 py-4">{coleta.cliente}</td>
               <td className="px-6 py-4 text-blue-500 hover:text-blue-700 cursor-pointer">
-                <button onClick={() => handleOpenModal(coleta.id, coleta.cliente)}>
+                <button
+                  onClick={() => handleOpenModal(coleta.id, coleta.cliente)}
+                >
                   Gerar QRCode
                 </button>
               </td>
@@ -73,7 +105,7 @@ const TabelaColetas = ({ coletas, removerColeta }) => {
                   ✏️
                 </Link>
                 <button
-                  onClick={() => handleRemoveColeta(coleta.id)}
+                  // onClick={() => handleRemoveColeta(coleta.id)}
                   className="text-red-500 hover:text-red-700"
                 >
                   🗑️
@@ -96,7 +128,8 @@ const TabelaColetas = ({ coletas, removerColeta }) => {
       </table>
       <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
         <p>
-          ID da Coleta: <strong>{selectedColetaId}</strong><br/>
+          ID da Coleta: <strong>{selectedColetaId}</strong>
+          <br />
           Cliente: <strong>{selectedCliente}</strong>
         </p>
       </Modal>

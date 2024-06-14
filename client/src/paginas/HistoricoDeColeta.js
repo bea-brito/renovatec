@@ -57,7 +57,7 @@ const HistoricoDeColeta = ({ token }) => {
         <div className={`ml-${isOpen ? "60" : "10"} flex-1 flex flex-col px-4`}>
           <div className="container mx-auto">
             <h1 className="text-lg font-bold my-4">Histórico de Coletas</h1>
-            <TabelaColetas coletas={coletas} removerColeta={removerColeta} />
+            <TabelaColetas />
             <div className="flex justify-end mt-8">
               <Botao
                 className="w-1/4 bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600"

@@ -26,3 +26,17 @@ exports.getColeta = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+exports.getColetaWithCliente = async (req, res) => {
+  try {
+    const response = await supabase
+      .from("Coleta")
+      .select("ID_Coleta,status,data,Cliente(nome)");
+    const { data, error } = response;
+
+    if (error) throw error;
+    res.status(201).json(response);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
