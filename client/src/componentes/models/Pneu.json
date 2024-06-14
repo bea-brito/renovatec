@@ -1,0 +1,52 @@
+{
+  "Pneu": {
+    "type": "object",
+    "properties": {
+      "ID_Pneu": {
+        "type": "integer",
+        "format": "int8"
+      },
+      "codigo_pneu": {
+        "type": "integer",
+        "format": "int8"
+      },
+      "matricula": {
+        "type": "string",
+        "maxLength": 255
+      },
+      "tamanho": {
+        "type": "string",
+        "maxLength": 255
+      },
+      "marca": {
+        "type": "string",
+        "maxLength": 255
+      },
+      "modelo": {
+        "type": "string",
+        "maxLength": 255
+      },
+      "DOT": {
+        "type": "string",
+        "maxLength": 255
+      },
+      "servico": {
+        "type": "string",
+        "maxLength": 255
+      },
+      "valor": {
+        "type": "number",
+        "format": "float8"
+      },
+      "status": {
+        "type": "string",
+        "maxLength": 255
+      },
+      "ID_Coleta": {
+        "type": "integer",
+        "format": "int8"
+      }
+    },
+    "required": ["ID_Pneu", "codigo_pneu", "matricula", "tamanho", "marca", "modelo", "DOT", "servico", "valor", "status", "ID_Coleta"]
+  }
+}

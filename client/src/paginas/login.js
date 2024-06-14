@@ -1,4 +1,4 @@
-import Botao from "../componentes/botao/botao";
+import Botao from "../componentes/botao/botao.js";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { AiOutlineUser, AiOutlineLock } from "react-icons/ai";
@@ -46,7 +46,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
+    <div className="flex items-center justify-center h-screen w-screen bg-gray-100">
       <div className="max-w-md w-full bg-white p-8 rounded shadow-md">
         <h3 className="text-2xl font-semibold text-yellow-500 mb-4">Login</h3>
         <form onSubmit={handleSubmit}>

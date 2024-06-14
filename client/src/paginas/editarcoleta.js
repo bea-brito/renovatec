@@ -36,7 +36,7 @@ const EditarColeta = () => {
     };
 
     return (
-        <div className="flex h-screen bg-gray-100">
+        <div className="flex h-screen w-screen w-screen bg-gray-100">
             <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
             <div className={`flex-1 ${isOpen ? 'ml-60' : 'ml-10'} transition-margin duration-300 p-4`}>
                 <h2 className="text-lg font-bold mb-4">Editar Coleta</h2>

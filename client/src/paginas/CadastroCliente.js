@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Sidebar from "../componentes/sidebar/lateral.js";
 import Botao from "../componentes/botao/botao.js";
 import { getVendedor } from "../services/vendedorCRUD.js";
-import { updateCliente, getClienteById } from "../services/clienteCRUD.js";
+import { insertCliente } from "../services/clienteCRUD.js";
 
-const EditarCliente = () => {
-  const { id } = useParams();
+const CadastroCliente = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     nomeArray: [],
@@ -39,75 +38,35 @@ const EditarCliente = () => {
       [id]: value,
     });
   };
-  console.log(id);
   console.log(formData);
 
-  const fetchDataVendedor = async () => {
-    
-    try {
-      const { data, error } = await getVendedor();
-      if (error) {
-        console.log("Error:");
-        console.log(error);
-        throw error;
-      }
-
-      const nomes = [];
-      const ids = [];
-
-      data.forEach((item) => {
-        nomes.push(item.nome);
-        ids.push(item.ID_Vendedor);
-      });
-
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        nomeArray: nomes,
-        id: ids
-      }));
-
-      console.log(data);
-      return data;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const fetchDataCliente = async () => {
-    try {
-      
-      const { data, error } = await getClienteById(id);
-      if (error) {
-        console.log("Error:");
-        console.log(error);
-        throw error;
-      }
-
-      setFormData({
-        nome: data[0].nome,
-        CPF: data[0].CPF,
-        telefone: data[0].telefone,
-        email: data[0].email,
-        logradouro: data[0].logradouro,
-        numero: data[0].numero,
-        complemento: data[0].complemento,
-        bairro: data[0].bairro,
-        CEP: data[0].CEP,
-        cidade: data[0].cidade,
-        UF: data[0].UF,
-        vendedor: data[0].ID_Vendedor,
-      });
-      console.log(data);
-      return data;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    fetchDataCliente();
-    fetchDataVendedor();
-    console.log(formData)
+    const fetchData = async () => {
+      try {
+        const { data, error } = await getVendedor();
+        if (error) {
+          console.log("Error:");
+          console.log(error);
+          throw error;
+        }
+
+        const nomes = [];
+        const ids = [];
+
+        data.forEach((item) => {
+          nomes.push(item.nome);
+          ids.push(item.ID_Vendedor);
+        });
+
+        setFormData({ nomeArray: nomes, id: ids });
+
+        console.log(data);
+        return data;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
   }, []);
 
   async function handleSubmit(e) {
@@ -130,8 +89,7 @@ const EditarCliente = () => {
     try {
       setErrorMessage("");
       console.log("tentativa");
-      const { data, error } = await updateCliente(
-        id,
+      const { data, error } = await insertCliente(
         formData.nome,
         formData.CPF,
         formData.telefone,
@@ -159,7 +117,7 @@ const EditarCliente = () => {
   }
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen w-screen">
       <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
       <div
         className="flex-1"
@@ -210,11 +168,12 @@ const EditarCliente = () => {
                 required
               >
                 <option value="">Selecione Vendedor</option>
-                {formData.nomeArray && formData.nomeArray.map((nome, index) => (
-                  <option key={index} value={formData.id[index]}>
-                    {nome}
-                  </option>
-                ))}
+                {formData.nomeArray &&
+                  formData.nomeArray.map((nome, index) => (
+                    <option key={index} value={formData.id[index]}>
+                      {nome}
+                    </option>
+                  ))}
               </select>
             </div>
             <div className="mb-4">
@@ -418,15 +377,15 @@ const EditarCliente = () => {
               type="submit"
               className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/2"
             >
-              Editar
+              Cadastrar
             </Botao>
           </form>
 
           <Link
-            to="/HistoricoCliente"
+            to="/HomePage"
             className="text-yellow-500 hover:text-yellow-600 font-bold py-2 px-4 rounded inline-block mt-4"
           >
-            Voltar
+            Voltar para a Home
           </Link>
         </div>
       </div>
@@ -434,4 +393,4 @@ const EditarCliente = () => {
   );
 };
 
-export default EditarCliente;
+export default CadastroCliente;

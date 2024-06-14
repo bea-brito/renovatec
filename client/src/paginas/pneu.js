@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Botao from "../componentes/botao/botao";
+import Botao from "../componentes/botao/botao.js";
 import supabase from "../supabaseClient.js";
 
 const Pneu = ({ setToken }) => {
@@ -76,7 +76,7 @@ const Pneu = ({ setToken }) => {
   }
 
   return (
-    <div className="w-full h-screen flex items-start">
+    <div className="w-full h-screen w-screen flex items-start">
       <div className="w-full flex flex-col p-20">
         <Botao onClick={voltar} className="mb-4">
           Voltar
