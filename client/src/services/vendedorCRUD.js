@@ -1,21 +1,41 @@
-import supabase from "../supabaseClient.js";
+import axios from "axios";
+
+const apiUrl = "http://localhost:3001/api";
 
 export const getVendedorByID = async (userId) => {
   try {
-    const response = await fetch(
-      `http://localhost:3001/api/vendedor/${userId}`
-    );
+    const response = await axios.get(`${apiUrl}/vendedores/${userId}`);
+    console.log("Response from server (getVendedorByID):", response);
 
-    if (!response.ok) {
-      throw new Error("Erro ao buscar vendedor");
+    if (!response) {
+      throw new Error("Erro ao buscar vendedor por ID");
     }
-    return await response.json();
+
+    return response.data;
   } catch (error) {
-    console.error("Erro ao buscar vendedor:", error.message);
+    console.error(
+      "Error in getVendedorByID service:",
+      error.response ? error.response.data : error.message
+    );
     throw error;
   }
 };
 
 export const getVendedor = async () => {
-  return await supabase.from("Vendedor").select();
+  try {
+    const response = await axios.get(`${apiUrl}/vendedores`);
+    console.log("Response from server (getVendedor):", response.data);
+
+    if (!response) {
+      throw new Error("Erro ao buscar vendedor por ID");
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error in getVendedor service:",
+      error.response ? error.response.data : error.message
+    );
+    throw error;
+  }
 };

@@ -1,46 +1,41 @@
-const { Router } = require("express");
-const router = Router();
-const supabase = require("../supabaseClient"); // Importe o cliente do Supabase
+// controllers/vendedorController.js
+const supabase = require("../supabaseClient");
 
-// Rota para buscar vendedor por ID
-const getVendedorByID = async (req, res) => {
-  const userId = req.params.userId;
-
+exports.getVendedorByID = async (req, res) => {
+  const { userId } = req.params;
   try {
-    const { data, error } = await supabase
+    const response = await supabase
       .from("Vendedor")
       .select()
       .eq("auth_ID", userId);
 
+    const { data, error } = response;
+
     if (error) {
+      console.error("Error in getVendedorByID:", error.message);
       throw error;
     }
 
-    res.status(200).json(data);
+    res.status(201).json(response);
   } catch (error) {
-    console.error("Error fetching vendedor by ID:", error.message);
-    res.status(500).json({ error: "Internal server error" });
+    console.error("Caught error in getVendedorByID:", error.message);
+    res.status(400).json({ error: error.message });
   }
 };
 
-// Rota para buscar todos os vendedores
-const getVendedor = async (req, res) => {
+exports.getVendedor = async (req, res) => {
   try {
-    const { data, error } = await supabase.from("Vendedor").select();
-    console.log(data);
+    const response = await supabase.from("Vendedor").select();
+    const { data, error } = response;
+
     if (error) {
+      console.error("Error in getVendedor:", error.message);
       throw error;
     }
 
-    res.status(200).json(data);
+    res.status(201).json(response);
   } catch (error) {
-    console.log(error);
-    console.error("Error fetching all vendedores:", error.message);
-    res.status(500).json({ error: "Internal server error" });
+    console.error("Caught error in getVendedor:", error.message);
+    res.status(400).json({ error: error.message });
   }
-};
-
-module.exports = {
-  getVendedor,
-  getVendedorByID,
 };
