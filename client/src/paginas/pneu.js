@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Botao from "../componentes/botao/botao.js";
+import Botao from "../componentes/botao/botao";
 import supabase from "../supabaseClient.js";
 
 const Pneu = ({ setToken }) => {

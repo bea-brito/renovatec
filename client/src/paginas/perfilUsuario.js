@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../componentes/sidebar/lateral.js";
-import { getVendedorByID } from "../services/vendedorCRUD.js";
+import Sidebar from "../componentes/sidebar/lateral";
+import { getVendedorByID } from "../services/vendedorCRUD";
 import { useAuth } from "../context/AuthProvider.js";
 
 const PerfilUsuario = () => {

@@ -1,4 +1,4 @@
-import Botao from "../componentes/botao/botao.js";
+import Botao from "../componentes/botao/botao";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { AiOutlineUser, AiOutlineLock } from "react-icons/ai";

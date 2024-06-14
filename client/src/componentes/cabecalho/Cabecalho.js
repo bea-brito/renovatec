@@ -29,11 +29,10 @@ const Cabecalho = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data, error } = await getVendedorByID(user.id);
-        if (error) {
-          console.log("Error:");
-          console.log(error);
-          throw error;
+        const data = await getVendedorByID(user.id);
+        console.log(data);
+        if (!data) {
+          throw new Error("Erro ao buscar dados no servidor");
         }
         const dadosUsuario = {
           nome: data[0].nome,

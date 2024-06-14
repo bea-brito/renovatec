@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Sidebar from "../componentes/sidebar/lateral.js";
-import InfoColeta from "../componentes/infoColeta/infoColeta.js";
-import { insertColeta } from "../services/coletaCRUD.js";
+import Sidebar from "../componentes/sidebar/lateral";
+import InfoColeta from "../componentes/infoColeta/infoColeta";
+import { insertColeta } from "../services/coletaCRUD";
 import { Alert } from "react-bootstrap";
 import supabase from "../supabaseClient.js";
 

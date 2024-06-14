@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Sidebar from "../componentes/sidebar/lateral.js";
-import Botao from "../componentes/botao/botao.js";
-import { getVendedor } from "../services/vendedorCRUD.js";
+import Sidebar from "../componentes/sidebar/lateral";
+import Botao from "../componentes/botao/botao";
+import { getVendedor } from "../services/vendedorCRUD";
 import { insertCliente } from "../services/clienteCRUD.js";
 
 const CadastroCliente = () => {

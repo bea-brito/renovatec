@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import supabase from "../supabaseClient.js";
+import axios from "axios";
 
 const AuthContext = createContext({});
 
@@ -8,6 +9,16 @@ export const useAuth = () => useContext(AuthContext);
 const login = (email, password) => {
   return supabase.auth.signInWithPassword({ email, password });
 };
+
+const login1 = async (email, password) => {
+  const response = await axios.post("http://localhost:3001/api/login", {
+    email,
+    password,
+  });
+  console.log(response.data);
+  return response.data;
+};
+
 const signOut = () => supabase.auth.signOut();
 
 const passwordReset = (email) => {

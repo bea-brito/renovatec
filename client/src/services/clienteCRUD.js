@@ -1,6 +1,8 @@
-import supabase from "../supabaseClient.js";
+import axios from "axios";
 
-export const insertCliente = (
+const apiUrl = "http://localhost:3001/api";
+
+export const insertCliente = async (
   nome,
   CPF,
   telefone,
@@ -14,43 +16,87 @@ export const insertCliente = (
   UF,
   ID_Vendedor
 ) => {
-  return supabase.from("Cliente").insert({
-    nome: nome,
-    CPF: CPF,
-    telefone: telefone,
-    email: email,
-    logradouro: logradouro,
-    numero: numero,
-    complemento: complemento,
-    bairro: bairro,
-    CEP: CEP,
-    cidade: cidade,
-    UF: UF,
-    ID_Vendedor: ID_Vendedor,
-  });
+  try {
+    const response = await axios.post(`${apiUrl}/clientes`, {
+      nome,
+      CPF,
+      telefone,
+      email,
+      logradouro,
+      numero,
+      complemento,
+      bairro,
+      CEP,
+      cidade,
+      UF,
+      ID_Vendedor,
+    });
+    console.log(response);
+    if (!response) {
+      throw new Error("Erro ao inserir cliente");
+    }
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
 export const getCliente = async () => {
-  return await supabase.from("Cliente").select();
+  try {
+    const response = await axios.get(`${apiUrl}/clientes`);
+    if (!response) {
+      throw new Error("Erro ao buscar clientes");
+    }
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
 export const getClienteById = async (id) => {
-  return await supabase.from("Cliente").select().eq("ID_Cliente", id);
+  try {
+    const response = await axios.get(`${apiUrl}/clientes/${id}`);
+    if (!response) {
+      throw new Error("Erro ao buscar cliente por ID");
+    }
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
 export const getClienteWithVendedor = async () => {
-  return await supabase
-    .from("Cliente")
-    .select(
-      "ID_Cliente,nome,CPF,telefone,email,logradouro,numero,complemento,bairro,CEP,cidade,UF, Vendedor(nome)"
-    );
+  try {
+    const response = await axios.get(`${apiUrl}/clientes-with-vendedor`);
+    if (!response) {
+      throw new Error("Erro ao buscar clientes com vendedor");
+    }
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
-export const deleteClienteById = (id) => {
-  return supabase.from("Cliente").delete().eq("ID_Cliente", id);
+export const deleteClienteById = async (id) => {
+  try {
+    const response = await axios.delete(`${apiUrl}/clientes-deletar/${id}`);
+    if (!response) {
+      throw new Error("Erro ao deletar cliente");
+    }
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
-export const updateCliente = (
+export const updateCliente = async (
   id,
   nome,
   CPF,
@@ -65,21 +111,27 @@ export const updateCliente = (
   UF,
   ID_Vendedor
 ) => {
-  return supabase
-    .from("Cliente")
-    .update({
-      nome: nome,
-      CPF: CPF,
-      telefone: telefone,
-      email: email,
-      logradouro: logradouro,
-      numero: numero,
-      complemento: complemento,
-      bairro: bairro,
-      CEP: CEP,
-      cidade: cidade,
-      UF: UF,
-      ID_Vendedor: ID_Vendedor,
-    })
-    .eq("ID_Cliente", id);
+  try {
+    const response = await axios.put(`${apiUrl}/clientes/${id}`, {
+      nome,
+      CPF,
+      telefone,
+      email,
+      logradouro,
+      numero,
+      complemento,
+      bairro,
+      CEP,
+      cidade,
+      UF,
+      ID_Vendedor,
+    });
+    if (!response) {
+      throw new Error("Erro ao atualizar cliente");
+    }
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };

@@ -6,18 +6,21 @@
         "type": "integer",
         "format": "int8"
       },
-      "Nome": {
+      "nome": {
         "type": "string",
         "maxLength": 255
       },
       "CPF": {
-        "type": "number"
+        "type": "string"
       },
-      "Senha": {
+      "email": {
+        "type": "string",
+        "maxLength": 255
+      },
+      "telefone": {
         "type": "string",
         "maxLength": 255
       }
-    },
-    "required": ["CPF", "Senha"]
+    }
   }
 }

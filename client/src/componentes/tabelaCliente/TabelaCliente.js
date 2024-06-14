@@ -12,6 +12,7 @@ const TabelaCliente = () => {
     if (window.confirm("Tem certeza que deseja excluir? 🤨")) {
       removerCliente(id);
     }
+    fetchData();
   };
 
   const removerCliente = async (id) => {
