@@ -1,7 +1,8 @@
-import { createClient } from "@supabase/supabase-js";
+const { createClient } = require("@supabase/supabase-js");
 
-const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
-const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY;
+const supabaseUrl = "https://alqpreifzqbsjktldcqd.supabase.co";
+const supabaseAnonKey =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFscXByZWlmenFic2prdGxkY3FkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTExMzcwMDgsImV4cCI6MjAyNjcxMzAwOH0.HAE9HVZkGSc0gYqn-OqnAlR9PmxsyUnfAhO3lr8_nTI";
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
-export default supabase;
+module.exports = supabase;
