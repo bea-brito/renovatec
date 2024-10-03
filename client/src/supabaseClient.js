@@ -1,9 +1,12 @@
-import { createClient } from "@supabase/supabase-js";
-
-const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
-const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY;
-
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+const {
+  REACT_APP_SUPABASE_URL,
+  REACT_APP_SUPABASE_ANON_KEY,
+} = require("./env");
+const { createClient } = require("@supabase/supabase-js");
+const supabase = createClient(
+  REACT_APP_SUPABASE_URL,
+  REACT_APP_SUPABASE_ANON_KEY
+);
 export default supabase;
 
 // Pra que eu pudesse rodar o front sem depender, por enquanto da conexão do back com o
