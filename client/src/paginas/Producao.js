@@ -1,10 +1,17 @@
 import React, { useState } from "react";
+<<<<<<< HEAD:client/src/paginas/Producao.js
+=======
+import { supabaseClient } from '../supabaseClient';
+>>>>>>> main:src/paginas/Producao.js
 import { useNavigate } from "react-router-dom"; // Altere para useNavigate
 import Sidebar from "../componentes/sidebar/lateral";
 import Cabecalho from "../componentes/cabecalho/Cabecalho";
 import Botao from "../componentes/botao/botao";
 import Modal from "../componentes/modal/modal"; // Certifique-se de que este é o caminho correto
+<<<<<<< HEAD:client/src/paginas/Producao.js
 import supabase from "../supabaseClient";
+=======
+>>>>>>> main:src/paginas/Producao.js
 
 const Producao = ({ idDaColeta }) => {
   const navigate = useNavigate(); // Hook para navegar
@@ -36,14 +43,19 @@ const Producao = ({ idDaColeta }) => {
     AutPosicao: "",
     EFExaminador: "",
     EFData: "",
+<<<<<<< HEAD:client/src/paginas/Producao.js
     EFConclusao: true, // Inicializar como true para booleans
     EFConclusaoReprocesso: false,
     EFConclusaoRetrabalho: false,
+=======
+    EFConclusao: true // Inicializar como true para booleans
+>>>>>>> main:src/paginas/Producao.js
   });
 
   // Função para lidar com mudanças nos inputs
   const handleInputChange = (e) => {
     const { id, value, type, checked } = e.target;
+<<<<<<< HEAD:client/src/paginas/Producao.js
     setFormData((prevState) => ({
       ...prevState,
       [id]:
@@ -56,17 +68,30 @@ const Producao = ({ idDaColeta }) => {
           : value,
     }));
   };
+=======
+    setFormData(prevState => ({
+      ...prevState,
+      [id]: type === "checkbox" ? checked : (value === "true" ? true : (value === "false" ? false : value))
+    }));
+  };
+  
+>>>>>>> main:src/paginas/Producao.js
 
   // Função chamada quando o botão Salvar é pressionado
   const handleSave = async (e) => {
     e.preventDefault(); // Prevenir comportamento padrão de submit do formulário
 
     try {
+<<<<<<< HEAD:client/src/paginas/Producao.js
       const { data, error } = await supabase
+=======
+      const { data, error } = await supabaseClient2
+>>>>>>> main:src/paginas/Producao.js
         .from("Producao")
         .insert([formData]);
 
       if (error) {
+<<<<<<< HEAD:client/src/paginas/Producao.js
         console.error("Erro ao inserir dados:", error);
         return;
       }
@@ -75,6 +100,16 @@ const Producao = ({ idDaColeta }) => {
       setModalOpen(true); // Abre o modal
     } catch (error) {
       console.error("Erro ao salvar os dados:", error);
+=======
+        console.error('Erro ao inserir dados:', error);
+        return;
+      }
+
+      console.log('Dados inseridos com sucesso:', data);
+      setModalOpen(true); // Abre o modal
+    } catch (error) {
+      console.error('Erro ao salvar os dados:', error);
+>>>>>>> main:src/paginas/Producao.js
     }
   };
 
@@ -477,9 +512,13 @@ const Producao = ({ idDaColeta }) => {
 
               {/* Seção: Aplicação de Cola */}
               <section className="mb-6">
+<<<<<<< HEAD:client/src/paginas/Producao.js
                 <h2 className="text-xl font-semibold mb-2">
                   Aplicação de Cola
                 </h2>
+=======
+                <h2 className="text-xl font-semibold mb-2">Aplicação de Cola</h2>
+>>>>>>> main:src/paginas/Producao.js
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="ACAplicador"
@@ -580,9 +619,13 @@ const Producao = ({ idDaColeta }) => {
 
               {/* Seção: Aplicação de Banda */}
               <section className="mb-6">
+<<<<<<< HEAD:client/src/paginas/Producao.js
                 <h2 className="text-xl font-semibold mb-2">
                   Aplicação de Banda
                 </h2>
+=======
+                <h2 className="text-xl font-semibold mb-2">Aplicação de Banda</h2>
+>>>>>>> main:src/paginas/Producao.js
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="ABAplicador"
@@ -818,4 +861,8 @@ const Producao = ({ idDaColeta }) => {
   );
 };
 
+<<<<<<< HEAD:client/src/paginas/Producao.js
 export default Producao;
+=======
+export default Producao;
+>>>>>>> main:src/paginas/Producao.js
