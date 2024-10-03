@@ -60,6 +60,7 @@ const AdicionarColeta = () => {
       servico: pneuData.servico,
       valor: pneuData.valor,
       status: "Recebido",
+      Etapa_Producao: "ExameInicial",
     };
 
     try {

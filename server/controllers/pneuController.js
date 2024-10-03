@@ -25,6 +25,7 @@ exports.insertPneu = async (req, res) => {
       valor,
       status: "Recebido",
       ID_Coleta,
+      Etapa_Producao: "ExameInicial",
     });
 
     if (response.error) {

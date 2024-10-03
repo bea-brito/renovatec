@@ -22,5 +22,6 @@ export const insertPneu = (
     valor: valor,
     status: "Recebido",
     ID_Coleta: ID_Coleta,
+    Etapa_Producao: "ExameInicial",
   });
 };
