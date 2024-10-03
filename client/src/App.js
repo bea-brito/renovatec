@@ -13,10 +13,7 @@ import VisualizarColeta from "./paginas/visualizarcoleta.js";
 import EditarColeta from "./paginas/editarcoleta.js";
 import PerfilUsuario from "./paginas/perfilUsuario.js";
 import EditarCliente from "./paginas/EditarCliente.js";
-<<<<<<< HEAD:client/src/App.js
 import AdicionarPneu from "./paginas/AdicionarPneu.js";
-=======
->>>>>>> main:src/App.js
 import Producao from "./paginas/Producao.js";
 import AuthRoute from "./componentes/autenticacao/AuthRoute.js";
 import { Container } from "react-bootstrap";

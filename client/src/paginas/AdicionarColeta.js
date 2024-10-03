@@ -89,7 +89,6 @@ const AdicionarColeta = () => {
     setIsOpen(!isOpen);
   };
 
-<<<<<<< HEAD
   return (
     <div className="flex h-screen bg-gray-100 w-screen">
       <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
@@ -130,19 +129,6 @@ const AdicionarColeta = () => {
       )}
     </div>
   );
-=======
-    return (
-        <div className="flex h-screen bg-gray-100 w-screen">
-            <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
-            <div className={`flex-1 ${isOpen ? 'ml-60' : 'ml-10'} transition-margin duration-300 p-4`}>
-                <h2 className="text-lg font-bold mb-4">Adicionar Nova Coleta</h2>
-                <InfoColeta pneus={coletaInfo.pneus} adicionarPneu={adicionarPneu} infoGeral={infoGeral} setInfoGeral={setInfoGeral} />
-                <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4" onClick={handleSaveColeta}>Salvar</button>
-                <ToastContainer />
-            </div>
-        </div>
-    );
->>>>>>> 312cf8592112ef5e0a4db3d2647e96d1d4e673db
 };
 
 export default AdicionarColeta;
