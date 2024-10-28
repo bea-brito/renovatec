@@ -159,7 +159,7 @@ const EditarCliente = () => {
   }
 
   return (
-    <div className="flex h-screen w-screen">
+    <div className="flex h-screen">
       <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
       <div
         className="flex-1"

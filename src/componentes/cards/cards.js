@@ -12,13 +12,16 @@ const Cards = () => {
   const goToHistoricoDeColetas = () => {
     navigate("/HistoricoDeColeta");
   };
+  const goToHistoricoCliente = () => {
+    navigate("/HistoricoCliente");
+  };
 
   const goToFaturamentos = () => {
     navigate("/faturamentos"); // Substitua pela rota real para faturamentos
   };
 
   const goToCadastrarCliente = () => {
-    navigate("/CadastroCliente"); // Substitua pela rota real para faturamentos
+    navigate("/CadastroCliente");
   };
 
   return (
@@ -36,6 +39,13 @@ const Cards = () => {
       >
         <h2 className="text-xl font-semibold mb-2">Cadastrar Cliente</h2>
         <p className="text-sm">Adicione um Cliente novo</p>
+      </div>
+      <div
+        className="w-64 bg-gray-800 text-white p-4 m-4 cursor-pointer hover:bg-gray-700 rounded-lg shadow-md"
+        onClick={goToHistoricoCliente}
+      >
+        <h2 className="text-xl font-semibold mb-2">Historico de Clientes</h2>
+        <p className="text-sm">Edite ou remova clientes</p>
       </div>
       <div
         className="w-64 bg-gray-800 text-white p-4 m-4 cursor-pointer hover:bg-gray-700 rounded-lg shadow-md"
