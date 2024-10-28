@@ -8,6 +8,7 @@ dist/
 out/
 
 # Ignorar arquivos de configuração locais
+env.*
 .env
 .env.local
 .env.*.local
