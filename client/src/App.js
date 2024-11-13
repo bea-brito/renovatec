@@ -41,7 +41,7 @@ function App() {
                 path="/visualizarcoleta/:id"
                 element={<VisualizarColeta />}
               />
-              <Route path="/Producao/:id" element={<Producao />} />
+              <Route path="/Producao/:idPneu" element={<Producao />} />
               <Route path="/editarcoleta/:id" element={<EditarColeta />} />
               <Route path="/EditarCliente/:id" element={<EditarCliente />} />
               <Route path="/AdicionarPneu/:id" element={<AdicionarPneu />} />
