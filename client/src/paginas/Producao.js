@@ -1,28 +1,33 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Altere para useNavigate
+import React, { useState, useEffect } from "react";
+import supabase from "../supabaseClient.js";
+import { useNavigate, useParams } from "react-router-dom";
 import Sidebar from "../componentes/sidebar/lateral";
 import Cabecalho from "../componentes/cabecalho/Cabecalho";
 import Botao from "../componentes/botao/botao";
-import Modal from "../componentes/modal/modal"; // Certifique-se de que este é o caminho correto
-import supabase from "../supabaseClient";
+import Modal from "../componentes/modal/modal";
 
-const Producao = ({ idDaColeta }) => {
-  const navigate = useNavigate(); // Hook para navegar
-  const [modalOpen, setModalOpen] = useState(false); // Estado para controlar o modal
+const Producao = () => {
+  const { idPneu } = useParams(); // Obtém o ID do pneu dos parâmetros da URL
+  const navigate = useNavigate();
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const [clienteData, setClienteData] = useState(null);
+  const [coletaData, setColetaData] = useState(null);
+  const [pneuData, setPneuData] = useState(null);
   const [formData, setFormData] = useState({
     prev: "",
     modelo: "",
     data: "",
     EIExaminador: "",
     EIdata: "",
-    EIAproRepro: true, // Inicializar como true para booleans
+    EIAproRepro: true,
     RasRaspador: "",
     Rasdata: "",
-    RasAproRepro: true, // Inicializar como true para booleans
-    RasRetCinta: true, // Inicializar como true para booleans
+    RasAproRepro: true,
+    RasRetCinta: true,
     EscExaminador: "",
-    EscAproRepro: true, // Inicializar como true para booleans
-    EscAproReproConserto: true, // Inicializar como true para booleans
+    EscAproRepro: true,
+    EscAproReproConserto: true,
     ACAplicador: "",
     OrbAplicador: "",
     CBCortador: "",
@@ -36,43 +41,128 @@ const Producao = ({ idDaColeta }) => {
     AutPosicao: "",
     EFExaminador: "",
     EFData: "",
-    EFConclusao: true, // Inicializar como true para booleans
-    EFConclusaoReprocesso: false,
-    EFConclusaoRetrabalho: false,
-  });
+    EFConclusao: true,
+    EFConclusaoReprocesso: "", 
+    EFConclusaoRetrabalho: true,
+    RasLargura: 0, 
+    RasPerimetro: 0,
+    ACAproRepro: true,
+    OrbAproRepro: true,
+    ABApro: true,
+    CBAproRepro: true,
+    MonAproRepro: true,
+  });  
 
-  // Função para lidar com mudanças nos inputs
+    // Função para buscar todos os dados relacionados
+    useEffect(() => {
+      const fetchAllData = async () => {
+        try {
+          // 1. Buscar dados da produção com base no ID do pneu
+          const { data: producaoData, error: producaoError } = await supabase
+            .from("Producao")
+            .select("*")
+            .eq("ID_Pneu", idPneu)
+            .single();
+  
+          if (producaoError) throw producaoError;
+          if (producaoData) setFormData(producaoData); // Armazena dados de produção
+  
+          // 2. Buscar dados do pneu associado à produção
+          const { data: pneuData, error: pneuError } = await supabase
+            .from("Pneu")
+            .select("*, ID_Coleta")
+            .eq("ID_Pneu", idPneu)
+            .single();
+  
+          if (pneuError) throw pneuError;
+          setPneuData(pneuData);
+  
+          // 3. Buscar dados da coleta associada ao pneu
+          const { data: coletaData, error: coletaError } = await supabase
+            .from("Coleta")
+            .select("*, ID_Cliente")
+            .eq("ID_Coleta", pneuData.ID_Coleta)
+            .single();
+  
+          if (coletaError) throw coletaError;
+          setColetaData(coletaData);
+  
+          // 4. Buscar dados do cliente associado à coleta
+          const { data: clienteData, error: clienteError } = await supabase
+            .from("Cliente")
+            .select("*")
+            .eq("ID_Cliente", coletaData.ID_Cliente)
+            .single();
+  
+          if (clienteError) throw clienteError;
+          setClienteData(clienteData);
+        } catch (error) {
+          console.error("Erro ao buscar dados:", error);
+        }
+      };
+  
+      if (idPneu) {
+        fetchAllData();
+      }
+    }, [idPneu]);
+
+  // Função para buscar dados atuais da produção do pneu ao carregar a página
+  useEffect(() => {
+    const fetchProducaoData = async () => {
+      if (!idPneu) {
+        console.error("ID do pneu não encontrado.");
+        return;
+      }
+
+      try {
+        const { data, error } = await supabase
+          .from("Producao")
+          .select("*")
+          .eq("ID_Pneu", idPneu)
+          .single(); // Busca a linha específica de produção para o pneu
+
+        if (error) throw error;
+        if (data) setFormData(data); // Popula o formulário com os dados existentes
+      } catch (error) {
+        console.error("Erro ao buscar dados de produção:", error);
+      }
+    };
+
+    fetchProducaoData();
+  }, [idPneu]);
+
+  // Função para lidar com mudanças nos inputs do formulário
   const handleInputChange = (e) => {
     const { id, value, type, checked } = e.target;
     setFormData((prevState) => ({
       ...prevState,
-      [id]:
-        type === "checkbox"
-          ? checked
-          : value === "true"
-          ? true
-          : value === "false"
-          ? false
-          : value,
+      [id]: type === "checkbox" ? checked : (value === "true" ? true : (value === "false" ? false : value)),
     }));
   };
 
-  // Função chamada quando o botão Salvar é pressionado
+  // Função chamada ao salvar as alterações
   const handleSave = async (e) => {
-    e.preventDefault(); // Prevenir comportamento padrão de submit do formulário
+    e.preventDefault();
+
+    if (!idPneu) {
+      console.error("ID do pneu não encontrado.");
+      return;
+    }
 
     try {
+      // Atualiza a linha na tabela Producao com base no ID_Pneu
       const { data, error } = await supabase
         .from("Producao")
-        .insert([formData]);
+        .update(formData) // Atualiza com os dados do formulário
+        .eq("ID_Pneu", idPneu); // Filtra pelo ID do pneu
 
       if (error) {
-        console.error("Erro ao inserir dados:", error);
+        console.error("Erro ao atualizar dados:", error);
         return;
       }
 
-      console.log("Dados inseridos com sucesso:", data);
-      setModalOpen(true); // Abre o modal
+      console.log("Dados atualizados com sucesso:", data);
+      setModalOpen(true); // Abre o modal de confirmação
     } catch (error) {
       console.error("Erro ao salvar os dados:", error);
     }
@@ -81,11 +171,10 @@ const Producao = ({ idDaColeta }) => {
   // Função para fechar o modal e redirecionar
   const handleCloseModal = () => {
     setModalOpen(false);
-    console.log(idDaColeta); // Verifique o valor de idDaColeta
-    navigate(`/visualizarcoleta/${idDaColeta}`);
+    navigate(`/visualizarcoleta/${idPneu}`);
   };
 
-  // Estado para controlar a abertura e fechamento da barra lateral
+  // Estado para controle da barra lateral
   const [isOpen, setIsOpen] = useState(false);
 
   // Função para alternar a barra lateral
@@ -93,16 +182,9 @@ const Producao = ({ idDaColeta }) => {
     setIsOpen(!isOpen);
   };
 
-  // Estado para controlar a seleção do dropdown
+  // Estado e opções para o dropdown (exemplo)
   const [selectedOption, setSelectedOption] = useState("Selecione uma opção");
-
-  // Opções para o dropdown
   const options = ["Opção 1", "Opção 2", "Opção 3"];
-
-  // Função para atualizar a opção selecionada
-  const handleOptionChange = (option) => {
-    setSelectedOption(option);
-  };
 
   return (
     <div className="flex flex-col h-screen w-screen">
@@ -116,98 +198,75 @@ const Producao = ({ idDaColeta }) => {
         <div className="bg-gray-100 p-4 flex items-center justify-center w-full">
           <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl">
             <form onSubmit={handleSave}>
-              {/* Seção: Dados do Cliente */}
-              <section className="mb-6 bg-gray-100 w-full">
-                <h1 className="text-xl font-bold mb-3">Linha de Produção</h1>
-                <h2 className="text-xl font-bold mb-2">Dados do Cliente</h2>
+            {/* Seção: Dados do Cliente */}
+            <section className="mb-6 bg-gray-100 w-full p-4 rounded-lg">
+              <h1 className="text-xl font-bold mb-3">Linha de Produção</h1>
+              <h2 className="text-xl font-bold mb-2">Dados do Cliente</h2>
+              {clienteData ? (
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <label
-                      className="block text-gray-700 text-sm font-bold mb-2"
-                      htmlFor="clientName"
-                    >
-                      Nome: Rodrigo aosjka
-                    </label>
+                    <label className="block text-gray-700 text-sm font-bold mb-2">Nome:</label>
+                    <span>{clienteData.nome}</span>
                   </div>
                   <div>
-                    <label
-                      className="block text-gray-700 text-sm font-bold mb-2"
-                      htmlFor="email"
-                    >
-                      Email: rodrigo@email.com
-                    </label>
+                    <label className="block text-gray-700 text-sm font-bold mb-2">Email:</label>
+                    <span>{clienteData.email}</span>
                   </div>
                   <div>
-                    <label
-                      className="block text-gray-700 text-sm font-bold mb-2"
-                      htmlFor="phone"
-                    >
-                      Telefone: (85) 1234-5678
-                    </label>
+                    <label className="block text-gray-700 text-sm font-bold mb-2">Telefone:</label>
+                    <span>{clienteData.telefone}</span>
                   </div>
                 </div>
-              </section>
+              ) : (
+                <p>Carregando dados do cliente...</p>
+              )}
+            </section>
 
-              {/* Seção: Coleta */}
-              <section className="mb-6">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {/* Seção: Dados da Coleta */}
+            <section className="mb-6 bg-gray-100 w-full p-4 rounded-lg">
+              <h2 className="text-xl font-bold mb-2">Dados da Coleta</h2>
+              {coletaData ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label
-                      className="block text-gray-700 text-sm font-bold mt-8"
-                      htmlFor="coleta"
-                    >
-                      Coleta (ID Cliente): 1
-                    </label>
+                    <label className="block text-gray-700 text-sm font-bold mb-2">Status:</label>
+                    <span>{coletaData.status}</span>
                   </div>
                   <div>
-                    <label
-                      className="block text-gray-700 text-sm font-bold mb-2"
-                      htmlFor="prev"
-                    >
-                      Prev.
-                    </label>
-                    <input
-                      id="prev"
-                      type="text"
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      placeholder="Prev."
-                      value={formData.prev}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div>
-                    <label
-                      className="block text-gray-700 text-sm font-bold mb-2"
-                      htmlFor="modelo"
-                    >
-                      Modelo
-                    </label>
-                    <input
-                      id="modelo"
-                      type="text"
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      placeholder="Modelo"
-                      value={formData.modelo}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div>
-                    <label
-                      className="block text-gray-700 text-sm font-bold mb-2"
-                      htmlFor="data"
-                    >
-                      Data
-                    </label>
-                    <input
-                      id="data"
-                      type="date"
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      value={formData.data}
-                      onChange={handleInputChange}
-                    />
+                    <label className="block text-gray-700 text-sm font-bold mb-2">Data:</label>
+                    <span>{new Date(coletaData.data).toLocaleDateString()}</span>
                   </div>
                 </div>
-              </section>
+              ) : (
+                <p>Carregando dados da coleta...</p>
+              )}
+            </section>
+
+            {/* Seção: Dados do Pneu */}
+            <section className="mb-6 bg-gray-100 w-full p-4 rounded-lg">
+              <h2 className="text-xl font-bold mb-2">Dados do Pneu</h2>
+              {pneuData ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-gray-700 text-sm font-bold mb-2">Código:</label>
+                    <span>{pneuData.codigo_pneu}</span>
+                  </div>
+                  <div>
+                    <label className="block text-gray-700 text-sm font-bold mb-2">Modelo:</label>
+                    <span>{pneuData.modelo}</span>
+                  </div>
+                  <div>
+                    <label className="block text-gray-700 text-sm font-bold mb-2">Marca:</label>
+                    <span>{pneuData.marca}</span>
+                  </div>
+                  <div>
+                    <label className="block text-gray-700 text-sm font-bold mb-2">Status:</label>
+                    <span>{pneuData.status}</span>
+                  </div>
+                </div>
+              ) : (
+                <p>Carregando dados do pneu...</p>
+              )}
+            </section>
 
               <hr className="border-t-2 border-black my-4" />
 
@@ -477,9 +536,7 @@ const Producao = ({ idDaColeta }) => {
 
               {/* Seção: Aplicação de Cola */}
               <section className="mb-6">
-                <h2 className="text-xl font-semibold mb-2">
-                  Aplicação de Cola
-                </h2>
+                <h2 className="text-xl font-semibold mb-2">Aplicação de Cola</h2>
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="ACAplicador"
@@ -580,9 +637,7 @@ const Producao = ({ idDaColeta }) => {
 
               {/* Seção: Aplicação de Banda */}
               <section className="mb-6">
-                <h2 className="text-xl font-semibold mb-2">
-                  Aplicação de Banda
-                </h2>
+                <h2 className="text-xl font-semibold mb-2">Aplicação de Banda</h2>
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="ABAplicador"
@@ -811,7 +866,7 @@ const Producao = ({ idDaColeta }) => {
       </div>
       {modalOpen && (
         <Modal isOpen={modalOpen} onClose={handleCloseModal}>
-          <p>Coleta salva com sucesso!</p>
+          <p>Coleta atualizada com sucesso!</p>
         </Modal>
       )}
     </div>
