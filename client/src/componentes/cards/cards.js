@@ -16,6 +16,10 @@ const Cards = () => {
     navigate("/HistoricoCliente");
   };
 
+  const goToHistoricoProducao = () => {
+    navigate("/HistoricoProducao");
+  };
+
   const goToFaturamentos = () => {
     navigate("/faturamentos"); // Substitua pela rota real para faturamentos
   };
@@ -47,6 +51,14 @@ const Cards = () => {
         <h2 className="text-xl font-semibold mb-2">Historico de Clientes</h2>
         <p className="text-sm">Edite ou remova clientes</p>
       </div>
+      <div
+          className="w-64 bg-gray-800 text-white p-4 m-4 cursor-pointer hover:bg-gray-700 rounded-lg shadow-md"
+          onClick={goToHistoricoProducao}
+        >
+          <h2 className="text-xl font-semibold mb-2">Historico Producao</h2>
+          <p className="text-sm">Veja a tabela da produção</p>
+        </div>
+
       <div
         className="w-64 bg-gray-800 text-white p-4 m-4 cursor-pointer hover:bg-gray-700 rounded-lg shadow-md"
         onClick={goToHistoricoDeColetas}
