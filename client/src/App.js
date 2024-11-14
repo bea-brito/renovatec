@@ -17,6 +17,7 @@ import AdicionarPneu from "./paginas/AdicionarPneu.js";
 import Producao from "./paginas/Producao.js";
 import AuthRoute from "./componentes/autenticacao/AuthRoute.js";
 import { Container } from "react-bootstrap";
+import HistoricoProducao from "./paginas/HistoricoProducao.js";
 
 function App() {
   return (
@@ -31,6 +32,10 @@ function App() {
               <Route
                 path="/HistoricoDeColeta/AdicionarColeta"
                 element={<AdicionarColeta />}
+              />
+              <Route
+                path="/HistoricoProducao"
+                element={<HistoricoProducao />}
               />
               <Route
                 path="/HistoricoDeColeta"
